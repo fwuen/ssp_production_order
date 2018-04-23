@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="production_order" target="1.5" />
+      <module name="production_order" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

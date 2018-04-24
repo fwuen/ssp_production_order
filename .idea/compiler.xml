@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="production_order" />
+        <module name="ssp_production_order" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="production_order" target="8" />
+      <module name="ssp_production_order" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

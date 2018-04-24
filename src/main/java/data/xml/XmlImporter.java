@@ -53,6 +53,7 @@ public class XmlImporter {
         root.getChildren("Product").forEach((product) -> products.add(
           new Product(
                   Integer.parseInt(product.getChildText("ProductID")),
+                  product.getChildText("ProductName"),
                   Integer.parseInt(product.getChildText("ProductTypeID"))
           )));
     
@@ -88,9 +89,10 @@ public class XmlImporter {
         List<Production> productions = new ArrayList<>();
     
         Element root = getXmlDocument().getRootElement();
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     
         for (Element production : root.getChildren("Production")) {
-            SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
 
             productions.add(
                     new Production(

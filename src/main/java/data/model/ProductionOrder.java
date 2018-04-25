@@ -19,7 +19,7 @@ public class ProductionOrder {
     private int customerId;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "p_id")
+    @JoinTable(name = "product", joinColumns = @JoinColumn(name="p_id", referencedColumnName = "p_id"), inverseJoinColumns = @JoinColumn(name = "po_id", referencedColumnName = "po_id"))
     @Getter
     @Setter
     private List<Product> items;

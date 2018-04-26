@@ -22,5 +22,7 @@ public class ProductType {
     public ProductType(int id) {
         this.id = id;
     }
-    
+
+    public ProductType() {
+    }
 }

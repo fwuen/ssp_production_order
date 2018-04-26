@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class ProductionOrder {
     @Id
     @Column(name = "po_id")
@@ -28,5 +29,8 @@ public class ProductionOrder {
         this.id = id;
         this.customerId = customerId;
         this.items = items;
+    }
+
+    public ProductionOrder() {
     }
 }

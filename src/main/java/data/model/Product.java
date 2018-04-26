@@ -29,4 +29,7 @@ public class Product {
         this.productName = productName;
         this.productType = productType;
     }
+
+    public Product() {
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Production {
     @Id
     @Column(name = "pr_id")
@@ -47,5 +48,8 @@ public class Production {
         this.toolId = toolId;
         this.productionOrder = productionOrder;
         this.productionDate = productionDate;
+    }
+
+    public Production() {
     }
 }

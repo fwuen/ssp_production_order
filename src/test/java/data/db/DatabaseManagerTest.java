@@ -2,6 +2,7 @@ package data.db;
 
 import data.model.Product;
 import data.model.ProductType;
+import data.model.Production;
 import data.model.ProductionOrder;
 import data.xml.XmlImporter;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +94,28 @@ public class DatabaseManagerTest {
 
         for (ProductionOrder productionOrder : productionOrders) {
             databaseManager.writeProductionOrder(productionOrder);
+        }
+    }
+
+    @Test
+    public void writeProductionData() {
+        DatabaseManager databaseManager = new DatabaseManager();
+        XmlImporter xmlImporter = new XmlImporter(new File("src\\main\\resources\\xml\\production.xml"));
+        List<Production> productions = new ArrayList<>();
+        try {
+            productions = xmlImporter.readProductions();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        for (Production production : productions) {
+            databaseManager.writeProduction(production);
         }
     }
 }

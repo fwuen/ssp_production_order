@@ -12,6 +12,7 @@ public class Production {
     private int toolId;
     private Date prDate;
     private Product productByProductId;
+    private ProductionOrder productionOrderByProductionOrderId;
 
     @Id
     @Column(name = "pr_id")
@@ -78,5 +79,13 @@ public class Production {
 
     public void setProductByProductId(Product productByProductId) {
         this.productByProductId = productByProductId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "production_order_id", referencedColumnName = "po_id", nullable = false)
+    public ProductionOrder getProductionOrderByProductionOrderId() { return productionOrderByProductionOrderId; }
+
+    public void setProductionOrderByProductionOrderId(ProductionOrder productionOrderByProductionOrderId) {
+        this.productionOrderByProductionOrderId = productionOrderByProductionOrderId;
     }
 }

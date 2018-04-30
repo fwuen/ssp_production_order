@@ -68,7 +68,7 @@ public class XmlImporterTest {
         List<Production> productions = null;
 
         try {
-            productions = xmlImporter.readProductions(new XmlImporter(new File(filePath + "production_order.xml")).readProductionOrders(new XmlImporter(new File(filePath + "product.xml")).readProducts()));
+            productions = xmlImporter.readProductions();
         } catch (Exception e) {
             e.printStackTrace();
         }

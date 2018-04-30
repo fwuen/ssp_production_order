@@ -83,4 +83,9 @@ public class DatabaseManager {
         em.remove(productionOrder);
         em.flush();
     }
+
+    public List<ProductionOrder> findAllProductionOrders() {
+        Query query = em.createQuery("SELECT e FROM ProductionOrder e");
+        return (List<ProductionOrder>) query.getResultList();
+    }
 }

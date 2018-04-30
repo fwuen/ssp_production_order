@@ -100,22 +100,20 @@ public class XmlImporter {
         return productionOrders;
     }
     
-    public List<Production> readProductions(List<ProductionOrder> productionOrders) throws ParseException, IOException, SAXException, ParserConfigurationException {
+    public List<Production> readProductions() throws ParseException, IOException, SAXException, ParserConfigurationException {
         List<Production> productions = new ArrayList<>();
     
         Element root = getXmlDocument().getRootElement();
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        DatabaseManager databaseManager = new DatabaseManager();
     
         for (Element production : root.getChildren("Production")) {
 
-            ProductType productType = new ProductType();
-            productType.setPtId(Integer.parseInt(production.getChild("Product").getChildText("ProductTypeID")));
+            Product productToAdd = databaseManager.findProductById(Integer.parseInt(production.getChild("Product").getChildText("ProductID")));
 
-            Product productToAdd = new Product();
-            productToAdd.setpId(Integer.parseInt(production.getChild("Product").getChildText("ProductID")));
-            productToAdd.setpName(production.getChild("Product").getChildText("ProductName"));
-            productToAdd.setProductTypeByProductId(productType);
+            ProductionOrder productionOrder = databaseManager.findProductionOrderById(Integer.parseInt(production.getChildText("ProductionOrderID")));
 
             Production productionToAdd = new Production();
             productionToAdd.setMachineId(Integer.parseInt(production.getChildText("MachineID")));
@@ -123,6 +121,7 @@ public class XmlImporter {
             productionToAdd.setPrId(Integer.parseInt(production.getChildText("ProductionID")));
             productionToAdd.setToolId(Integer.parseInt(production.getChildText("ToolID")));
             productionToAdd.setProductByProductId(productToAdd);
+            productionToAdd.setProductionOrderByProductionOrderId(productionOrder);
 
             productions.add(productionToAdd);
         }

@@ -24,7 +24,7 @@ public class XmlImporterTest {
     
         Assert.assertNotNull(products);
         products.forEach(product ->
-                System.out.println(product.getId())
+                System.out.println(product.getpId())
         );
     }
 
@@ -41,7 +41,7 @@ public class XmlImporterTest {
 
         Assert.assertNotNull(productTypes);
         productTypes.forEach(productType ->
-                System.out.println(productType.getId())
+                System.out.println(productType.getPtId())
         );
     }
 
@@ -58,7 +58,7 @@ public class XmlImporterTest {
 
         Assert.assertNotNull(productionOrders);
         productionOrders.forEach(productionOrder ->
-                System.out.println(productionOrder.getId())
+                System.out.println(productionOrder.getPoId())
         );
     }
 
@@ -75,8 +75,8 @@ public class XmlImporterTest {
 
         Assert.assertNotNull(productions);
         productions.forEach(production -> {
-            System.out.println(production.getId());
-            System.out.println(production.getProductionDate());
+            System.out.println(production.getPrId());
+            System.out.println(production.getPrDate());
         });
     }
 }

@@ -8,6 +8,8 @@ import data.model.ProductionOrder;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import java.util.List;
 
 public class DatabaseManager {
     private EntityManager em;
@@ -18,11 +20,18 @@ public class DatabaseManager {
     }
     
     public void writeProduct(Product product) {
+        em.getTransaction().begin();
         em.persist(product);
+        em.getTransaction().commit();
     }
     
-    public void findProductById(int id) {
-        em.find(Product.class, id);
+    public Product findProductById(int id) {
+        return em.find(Product.class, id);
+    }
+
+    public List<Product> findAllProducts() {
+        Query query = em.createQuery("SELECT e FROM Product e");
+        return (List<Product>) query.getResultList();
     }
     
     public void removeProduct(Product product) {
@@ -31,11 +40,13 @@ public class DatabaseManager {
     }
     
     public void writeProduction(Production production) {
+        em.getTransaction().begin();
         em.persist(production);
+        em.getTransaction().commit();
     }
     
-    public void findProductionById(int id) {
-        em.find(Production.class, id);
+    public Production findProductionById(int id) {
+        return em.find(Production.class, id);
     }
     
     public void removeProduction(Production production) {
@@ -49,8 +60,8 @@ public class DatabaseManager {
         em.getTransaction().commit();
     }
     
-    public void findProductTypeById(int id) {
-        em.find(ProductType.class, id);
+    public ProductType findProductTypeById(int id) {
+        return em.find(ProductType.class, id);
     }
     
     public void removeProductType(ProductType productType) {
@@ -59,11 +70,13 @@ public class DatabaseManager {
     }
     
     public void writeProductionOrder(ProductionOrder productionOrder) {
+        em.getTransaction().begin();
         em.persist(productionOrder);
+        em.getTransaction().commit();
     }
     
-    public void findProductionOrderById(int id) {
-        em.find(ProductionOrder.class, id);
+    public ProductionOrder findProductionOrderById(int id) {
+        return em.find(ProductionOrder.class, id);
     }
     
     public void removeProductionOrder(ProductionOrder productionOrder) {

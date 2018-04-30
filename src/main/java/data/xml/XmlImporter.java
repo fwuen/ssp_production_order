@@ -1,5 +1,6 @@
 package data.xml;
 
+import data.db.DatabaseManager;
 import data.model.*;
 import org.jdom2.Element;
 import org.jdom2.input.DOMBuilder;
@@ -11,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,11 +39,14 @@ public class XmlImporter {
         Element root = getXmlDocument().getRootElement();
     
         root.getChildren("ProductType").forEach((productTypeXml) -> {
-            ProductType productType = new ProductType(Integer.parseInt(productTypeXml.getChildText("ProductTypeID")));
-            if(Integer.parseInt(productTypeXml.getChildText("ParentProductTypeID")) == productType.getId()) {
-                productType.setParentProductType(productType);
+            ProductType productType = new ProductType();
+            productType.setPtId(Integer.parseInt(productTypeXml.getChildText("ProductTypeID")));
+            if(Integer.parseInt(productTypeXml.getChildText("ParentProductTypeID")) == productType.getPtId()) {
+                productType.setProductTypeByPtParentPtId(productType);
             } else {
-                productType.setParentProductType(new ProductType(Integer.parseInt(productTypeXml.getChildText("ParentProductTypeID"))));
+                ProductType parentProductType = new ProductType();
+                parentProductType.setPtId(Integer.parseInt(productTypeXml.getChildText("ParentProductTypeID")));
+                productType.setProductTypeByPtParentPtId(parentProductType);
             }
     
             prodTypes.add(productType);
@@ -54,34 +59,42 @@ public class XmlImporter {
         List<Product> products = new ArrayList<>();
     
         Element root = getXmlDocument().getRootElement();
-    
-        root.getChildren("Product").forEach((product) -> products.add(
-          new Product(
-                  Integer.parseInt(product.getChildText("ProductID")),
-                  product.getChildText("ProductName"),
-                  new ProductType(Integer.parseInt(product.getChildText("ProductTypeID")))
-          )));
+
+        root.getChildren("Product").forEach((product) -> {
+            DatabaseManager databaseManager = new DatabaseManager();
+            ProductType pt = databaseManager.findProductTypeById(Integer.parseInt(product.getChildText("ProductTypeID")));
+            Product productToAdd = new Product();
+            productToAdd.setpId(Integer.parseInt(product.getChildText("ProductID")));
+            productToAdd.setProductTypeByProductId(pt);
+            productToAdd.setpName(product.getChildText("ProductName"));
+
+
+            products.add(productToAdd);
+        });
     
         return products;
     }
     
     public List<ProductionOrder> readProductionOrders(List<Product> products) throws IOException, SAXException, ParserConfigurationException {
         List<ProductionOrder> productionOrders = new ArrayList<>();
-        List<Product> productionOrderItems = new ArrayList<>();
     
         Element root = getXmlDocument().getRootElement();
             
         root.getChildren("ProductionOrder").forEach((productionOrder) -> {
-            productionOrder.getChildren("ProductionOrderItem").forEach((productionOrderItem) -> {
+            List<Product> productionOrderItems = new ArrayList<>();
+
+            productionOrder.getChild("ProductionOrderItems").getChildren("ProductionOrderItem").forEach((productionOrderItem) -> {
                 productionOrderItems.add(products.get(Integer.parseInt(productionOrderItem.getChildText("ProductID"))-1));
             });
-            
-            productionOrders.add(
-                    new ProductionOrder(
-                            Integer.parseInt(productionOrder.getChildText("ProductionOrderID")),
-                            Integer.parseInt(productionOrder.getChildText("CustomerID")),
-                            productionOrderItems
-                    ));
+
+            ProductionOrder productionOrderToAdd = new ProductionOrder();
+            productionOrderToAdd.setCuId(Integer.parseInt(productionOrder.getChildText("CustomerID")));
+            productionOrderToAdd.setPoId(Integer.parseInt(productionOrder.getChildText("ProductionOrderID")));
+            productionOrderToAdd.setProductionOrderItems(productionOrderItems);
+
+            productionOrders.add(productionOrderToAdd);
+
+            System.out.println(productionOrderToAdd.getProductionOrderItems().get(0).getpName());
         });
     
         return productionOrders;
@@ -96,20 +109,22 @@ public class XmlImporter {
     
         for (Element production : root.getChildren("Production")) {
 
-            productions.add(
-                    new Production(
-                            Integer.parseInt(production.getChildText("ProductionID")),
-                            new Product(
-                                    Integer.parseInt(production.getChild("Product").getChildText("ProductID")),
-                                    production.getChild("Product").getChildText("ProductName"),
-                                    new ProductType(Integer.parseInt(production.getChild("Product").getChildText("ProductTypeID")))
-                            ),
-                            Integer.parseInt(production.getChildText("MachineID")),
-                            Integer.parseInt(production.getChildText("ToolID")),
-                            productionOrders.get(Integer.parseInt(production.getChildText("ProductionOrderID"))-1),
-                            format.parse(production.getChildText("ProductionDate"))
-                    )
-            );
+            ProductType productType = new ProductType();
+            productType.setPtId(Integer.parseInt(production.getChild("Product").getChildText("ProductTypeID")));
+
+            Product productToAdd = new Product();
+            productToAdd.setpId(Integer.parseInt(production.getChild("Product").getChildText("ProductID")));
+            productToAdd.setpName(production.getChild("Product").getChildText("ProductName"));
+            productToAdd.setProductTypeByProductId(productType);
+
+            Production productionToAdd = new Production();
+            productionToAdd.setMachineId(Integer.parseInt(production.getChildText("MachineID")));
+            productionToAdd.setPrDate(new Date(format.parse(production.getChildText("ProductionDate")).getTime()));
+            productionToAdd.setPrId(Integer.parseInt(production.getChildText("ProductionID")));
+            productionToAdd.setToolId(Integer.parseInt(production.getChildText("ToolID")));
+            productionToAdd.setProductByProductId(productToAdd);
+
+            productions.add(productionToAdd);
         }
     
         return productions;

@@ -1,38 +1,58 @@
 package data.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name = "production_order")
+@Table(name = "production_order", schema = "production_order")
 public class ProductionOrder {
+    private int poId;
+    private Integer cuId;
+    private List<Product> productionOrderItems;
+
     @Id
     @Column(name = "po_id")
-    @Getter
-    @Setter
-    private int id;
-
-    @Column(name = "cu_id")
-    @Getter
-    @Setter
-    private int customerId;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "production_order_items",
-            joinColumns = @JoinColumn(name="p_id"))
-    @Getter
-    @Setter
-    private List<Product> items;
-    
-    public ProductionOrder(int id, int customerId, List<Product> items) {
-        this.id = id;
-        this.customerId = customerId;
-        this.items = items;
+    public int getPoId() {
+        return poId;
     }
 
-    public ProductionOrder() {
+    public void setPoId(int poId) {
+        this.poId = poId;
+    }
+
+    @Basic
+    @Column(name = "cu_id")
+    public Integer getCuId() {
+        return cuId;
+    }
+
+    public void setCuId(Integer cuId) {
+        this.cuId = cuId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductionOrder that = (ProductionOrder) o;
+        return poId == that.poId &&
+                Objects.equals(cuId, that.cuId);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(poId, cuId);
+    }
+
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    @JoinTable(name = "production_order_items", schema = "production_order",joinColumns = @JoinColumn(name = "po_id", referencedColumnName = "po_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "p_id", referencedColumnName = "p_id", nullable = false))
+    public List<Product> getProductionOrderItems() {
+        return productionOrderItems;
+    }
+
+    public void setProductionOrderItems(List<Product> productionOrderItems) {
+        this.productionOrderItems = productionOrderItems;
     }
 }

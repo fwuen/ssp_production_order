@@ -19,7 +19,7 @@ public class Product {
     private String productName;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "p_type_id")
+    @JoinColumn(name = "p_type_id", referencedColumnName = "pt_id")
     @Getter
     @Setter
     private ProductType productType;

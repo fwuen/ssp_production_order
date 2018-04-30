@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "production_order")
 public class ProductionOrder {
     @Id
     @Column(name = "po_id")
@@ -20,7 +21,8 @@ public class ProductionOrder {
     private int customerId;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "product", joinColumns = @JoinColumn(name="p_id", referencedColumnName = "p_id"), inverseJoinColumns = @JoinColumn(name = "po_id", referencedColumnName = "po_id"))
+    @JoinTable(name = "production_order_items",
+            joinColumns = @JoinColumn(name="p_id"))
     @Getter
     @Setter
     private List<Product> items;

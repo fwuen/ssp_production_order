@@ -31,7 +31,7 @@ public class Production {
     private int toolId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "production_order_id")
+    @JoinColumn(name = "production_order_id", referencedColumnName = "po_id")
     @Getter
     @Setter
     private ProductionOrder productionOrder;

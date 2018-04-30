@@ -13,7 +13,7 @@ public class DatabaseManager {
     private EntityManager em;
     
     public DatabaseManager() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProductionOrderJPA");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProductionOrderPersistenceUnit");
         this.em = emf.createEntityManager();
     }
     
@@ -44,7 +44,9 @@ public class DatabaseManager {
     }
     
     public void writeProductType(ProductType productType) {
+        em.getTransaction().begin();
         em.persist(productType);
+        em.getTransaction().commit();
     }
     
     public void findProductTypeById(int id) {

@@ -24,7 +24,13 @@ public class DatabaseManager {
         em.persist(product);
         em.getTransaction().commit();
     }
-    
+
+    public void updateProduct(Product product) {
+        em.getTransaction().begin();
+        em.merge(product);
+        em.getTransaction().commit();
+    }
+
     public Product findProductById(int id) {
         return em.find(Product.class, id);
     }

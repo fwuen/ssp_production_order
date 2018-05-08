@@ -118,4 +118,12 @@ public class DatabaseManagerTest {
             databaseManager.writeProduction(production);
         }
     }
+
+    @Test
+    public void testUpdateProduct() {
+        DatabaseManager databaseManager = new DatabaseManager();
+        Product product = databaseManager.findProductById(1);
+        product.setpName("Product1");
+        databaseManager.updateProduct(product);
+    }
 }

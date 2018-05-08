@@ -8,7 +8,7 @@ import java.util.Objects;
 @Table(name = "production_order", schema = "production_order")
 public class ProductionOrder {
     private int poId;
-    private Integer cuId;
+    private Integer coId;
     private List<Product> productionOrderItems;
 
     @Id
@@ -22,13 +22,13 @@ public class ProductionOrder {
     }
 
     @Basic
-    @Column(name = "cu_id")
-    public Integer getCuId() {
-        return cuId;
+    @Column(name = "co_id")
+    public Integer getCoId() {
+        return coId;
     }
 
-    public void setCuId(Integer cuId) {
-        this.cuId = cuId;
+    public void setCoId(Integer cuId) {
+        this.coId = cuId;
     }
 
     @Override
@@ -37,13 +37,13 @@ public class ProductionOrder {
         if (o == null || getClass() != o.getClass()) return false;
         ProductionOrder that = (ProductionOrder) o;
         return poId == that.poId &&
-                Objects.equals(cuId, that.cuId);
+                Objects.equals(coId, that.coId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(poId, cuId);
+        return Objects.hash(poId, coId);
     }
 
     @ManyToMany(cascade = {CascadeType.MERGE})

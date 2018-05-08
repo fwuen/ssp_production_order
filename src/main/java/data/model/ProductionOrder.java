@@ -10,6 +10,7 @@ public class ProductionOrder {
     private int poId;
     private Integer coId;
     private List<Product> productionOrderItems;
+    private List<CustomerOrder> customerOrders;
 
     @Id
     @Column(name = "po_id")
@@ -54,5 +55,14 @@ public class ProductionOrder {
 
     public void setProductionOrderItems(List<Product> productionOrderItems) {
         this.productionOrderItems = productionOrderItems;
+    }
+
+    @ManyToMany(mappedBy = "productionOrders")
+    public List<CustomerOrder> getCustomerOrders() {
+        return customerOrders;
+    }
+
+    public void setCustomerOrders(List<CustomerOrder> customerOrders) {
+        this.customerOrders = customerOrders;
     }
 }

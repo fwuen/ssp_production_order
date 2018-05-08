@@ -1026,7 +1026,7 @@
     </column>
     <column id="253" parent="234" name="pr_date">
       <Position>6</Position>
-      <DataType>date|0s</DataType>
+      <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="254" parent="234" name="fk_product_idx">

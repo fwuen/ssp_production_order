@@ -1,7 +1,7 @@
 package data.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -10,7 +10,7 @@ public class Production {
     private int prId;
     private int machineId;
     private int toolId;
-    private Date prDate;
+    private Timestamp prTimestamp;
     private Product productByProductId;
     private ProductionOrder productionOrderByProductionOrderId;
 
@@ -46,12 +46,12 @@ public class Production {
 
     @Basic
     @Column(name = "pr_date")
-    public Date getPrDate() {
-        return prDate;
+    public Timestamp getPrTimestamp() {
+        return prTimestamp;
     }
 
-    public void setPrDate(Date prDate) {
-        this.prDate = prDate;
+    public void setPrTimestamp(Timestamp prDate) {
+        this.prTimestamp = prDate;
     }
 
     @Override
@@ -62,13 +62,13 @@ public class Production {
         return prId == that.prId &&
                 machineId == that.machineId &&
                 toolId == that.toolId &&
-                Objects.equals(prDate, that.prDate);
+                Objects.equals(prTimestamp, that.prTimestamp);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(prId, machineId, toolId, prDate);
+        return Objects.hash(prId, machineId, toolId, prTimestamp);
     }
 
     @ManyToOne

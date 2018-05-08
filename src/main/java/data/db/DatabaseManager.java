@@ -53,6 +53,11 @@ public class DatabaseManager {
         em.remove(production);
         em.flush();
     }
+
+    public List<Production> findAllProductions() {
+        Query query = em.createQuery("SELECT e FROM Production e");
+        return (List<Production>) query.getResultList();
+    }
     
     public void writeProductType(ProductType productType) {
         em.getTransaction().begin();

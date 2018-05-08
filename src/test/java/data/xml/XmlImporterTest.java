@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.List;
 
 public class XmlImporterTest {
-    private String filePath = "W:\\ssp_data\\";
+    private String filePath = "C:\\workspace\\ssp_data\\";
     
     @Test
     public void testReadProducts() {
@@ -76,7 +76,7 @@ public class XmlImporterTest {
         Assert.assertNotNull(productions);
         productions.forEach(production -> {
             System.out.println(production.getPrId());
-            System.out.println(production.getPrDate());
+            System.out.println(production.getPrTimestamp());
         });
     }
 }

@@ -12,7 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -117,7 +117,7 @@ public class XmlImporter {
 
             Production productionToAdd = new Production();
             productionToAdd.setMachineId(Integer.parseInt(production.getChildText("MachineID")));
-            productionToAdd.setPrDate(new Date(format.parse(production.getChildText("ProductionDate")).getTime()));
+            productionToAdd.setPrTimestamp(new Timestamp(format.parse(production.getChildText("ProductionDate")).getTime()));
             productionToAdd.setPrId(Integer.parseInt(production.getChildText("ProductionID")));
             productionToAdd.setToolId(Integer.parseInt(production.getChildText("ToolID")));
             productionToAdd.setProductByProductId(productToAdd);

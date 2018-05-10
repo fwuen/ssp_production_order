@@ -7,14 +7,13 @@ import data.model.ProductionOrder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "addOrderViewBean")
-@ApplicationScoped
+@ViewScoped
 public class AddOrderView {
     DatabaseManager databaseManager = new DatabaseManager();
 
@@ -28,7 +27,7 @@ public class AddOrderView {
 
     @Getter
     @Setter
-    private int customerId;
+    int customerId;
 
     public void submitForm() {
         CustomerOrder customerOrder = new CustomerOrder();

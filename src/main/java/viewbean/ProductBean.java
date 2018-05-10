@@ -23,8 +23,4 @@ public class ProductBean {
         databaseManager = new DatabaseManager();
         return databaseManager.findAllProducts();
     }
-
-    public void update() {
-        databaseManager.updateProduct(allProducts.get(0));
-    }
 }

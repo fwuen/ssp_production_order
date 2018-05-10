@@ -1,9 +1,6 @@
 package data.db;
 
-import data.model.Product;
-import data.model.ProductType;
-import data.model.Production;
-import data.model.ProductionOrder;
+import data.model.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -98,5 +95,11 @@ public class DatabaseManager {
     public List<ProductionOrder> findAllProductionOrders() {
         Query query = em.createQuery("SELECT e FROM ProductionOrder e");
         return (List<ProductionOrder>) query.getResultList();
+    }
+
+    public void writeCustomerOrder(CustomerOrder customerOrder) {
+        em.getTransaction().begin();
+        em.persist(customerOrder);
+        em.getTransaction().commit();
     }
 }

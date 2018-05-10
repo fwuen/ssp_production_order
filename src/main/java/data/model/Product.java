@@ -11,6 +11,7 @@ public class Product {
     private ProductType productType;
     private String pName;
     private List<ProductionOrder> productionOrders;
+    private Double pPrice;
 
     @Id
     @Column(name = "p_id")
@@ -64,5 +65,20 @@ public class Product {
 
     public void setProductionOrders(List<ProductionOrder> productionOrders) {
         this.productionOrders = productionOrders;
+    }
+
+    @Basic
+    @Column(name = "p_price")
+    public Double getpPrice() {
+        return pPrice;
+    }
+
+    public void setpPrice(Double pPrice) {
+        this.pPrice = pPrice;
+    }
+
+    @Override
+    public String toString() {
+        return this.pName;
     }
 }

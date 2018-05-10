@@ -46,7 +46,7 @@ public class CustomerOrder {
         return Objects.hash(coId, customerId);
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "production_customer_order", schema = "production_order", joinColumns = @JoinColumn(name = "co_id", referencedColumnName = "co_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "po_id", referencedColumnName = "po_id", nullable = false))
     public List<ProductionOrder> getProductionOrders() {
         return productionOrders;

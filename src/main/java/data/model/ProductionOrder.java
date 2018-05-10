@@ -1,14 +1,16 @@
 package data.model;
 
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "production_order", schema = "production_order")
+@EqualsAndHashCode
 public class ProductionOrder {
     private int poId;
-    private Integer coId;
     private List<Product> productionOrderItems;
     private List<CustomerOrder> customerOrders;
 
@@ -20,31 +22,6 @@ public class ProductionOrder {
 
     public void setPoId(int poId) {
         this.poId = poId;
-    }
-
-    @Basic
-    @Column(name = "co_id")
-    public Integer getCoId() {
-        return coId;
-    }
-
-    public void setCoId(Integer cuId) {
-        this.coId = cuId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductionOrder that = (ProductionOrder) o;
-        return poId == that.poId &&
-                Objects.equals(coId, that.coId);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(poId, coId);
     }
 
     @ManyToMany(cascade = {CascadeType.MERGE})

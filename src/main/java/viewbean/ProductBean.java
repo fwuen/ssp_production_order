@@ -1,4 +1,4 @@
-package bean;
+package viewbean;
 
 import data.db.DatabaseManager;
 import data.model.Product;
@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "productBean")

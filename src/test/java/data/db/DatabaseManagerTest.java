@@ -5,6 +5,7 @@ import data.model.ProductType;
 import data.model.Production;
 import data.model.ProductionOrder;
 import data.xml.XmlImporter;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -26,6 +27,8 @@ public class DatabaseManagerTest {
         databaseManager.writeProductType(productType);
     }
 
+    @Deprecated
+    @Ignore
     @Test
     public void testWriteProductionOrder() {
         DatabaseManager databaseManager = new DatabaseManager();
@@ -38,7 +41,6 @@ public class DatabaseManagerTest {
         productList.add(product);
         productionOrder.setProductionOrderItems(productList);
         productionOrder.setPoId(1);
-        productionOrder.setCuId(1);
         databaseManager.writeProductionOrder(productionOrder);
 
         System.out.println(databaseManager.findProductionOrderById(1).getProductionOrderItems().get(0).getpName());

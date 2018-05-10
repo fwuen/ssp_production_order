@@ -74,7 +74,8 @@ public class XmlImporter {
     
         return products;
     }
-    
+
+    @Deprecated
     public List<ProductionOrder> readProductionOrders(List<Product> products) throws IOException, SAXException, ParserConfigurationException {
         List<ProductionOrder> productionOrders = new ArrayList<>();
     
@@ -88,7 +89,6 @@ public class XmlImporter {
             });
 
             ProductionOrder productionOrderToAdd = new ProductionOrder();
-            productionOrderToAdd.setCuId(Integer.parseInt(productionOrder.getChildText("CustomerID")));
             productionOrderToAdd.setPoId(Integer.parseInt(productionOrder.getChildText("ProductionOrderID")));
             productionOrderToAdd.setProductionOrderItems(productionOrderItems);
 

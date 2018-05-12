@@ -30,6 +30,7 @@ public class AddOrderView {
     int customerId;
 
     public void submitForm() {
+        /*
         CustomerOrder customerOrder = new CustomerOrder();
         customerOrder.setCustomerId(customerId);
         List<CustomerOrder> customerOrders = new ArrayList<>();
@@ -46,8 +47,20 @@ public class AddOrderView {
         //productionOrders.add(productionOrder);
         //customerOrder.setProductionOrders(productionOrders);
 
+        databaseManager.writeProductionOrder(productionOrder);*/
+        ProductionOrder productionOrder = new ProductionOrder();
+        //productionOrder.setProductionOrderItems(selectedProducts);
+
         databaseManager.writeProductionOrder(productionOrder);
 
+        List<ProductionOrder> productionOrders = new ArrayList<>();
+        productionOrders.add(productionOrder);
+
+        CustomerOrder customerOrder = new CustomerOrder();
+        customerOrder.setCustomerId(customerId);
+        customerOrder.setProductionOrders(productionOrders);
+
+        databaseManager.writeCustomerOrder(customerOrder);
     }
 
     public List<Product> allProducts() {

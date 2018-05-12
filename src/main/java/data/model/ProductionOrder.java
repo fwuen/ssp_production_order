@@ -9,13 +9,14 @@ import java.util.Objects;
 @Entity
 @Table(name = "production_order", schema = "production_order")
 @EqualsAndHashCode
+@TableGenerator(name="table_generator", initialValue = 50, allocationSize = 50)
 public class ProductionOrder {
     private int poId;
     private List<Product> productionOrderItems;
     private List<CustomerOrder> customerOrders;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.TABLE)
     @Column(name = "po_id")
     public int getPoId() {
         return poId;

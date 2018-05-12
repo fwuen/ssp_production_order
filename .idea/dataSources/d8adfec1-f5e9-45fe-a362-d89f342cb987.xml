@@ -939,190 +939,181 @@
     <table id="238" parent="5" name="production_order_items">
       <Engine>InnoDB</Engine>
     </table>
-    <column id="239" parent="232" name="co_id">
+    <table id="239" parent="5" name="sequence">
+      <Engine>InnoDB</Engine>
+    </table>
+    <column id="240" parent="232" name="co_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="240" parent="232" name="customer_id">
+    <column id="241" parent="232" name="customer_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="241" parent="232" name="PRIMARY">
+    <key id="242" parent="232" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>co_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="242" parent="233" name="p_id">
+    <column id="243" parent="233" name="p_id">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="243" parent="233" name="p_type_id">
-      <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="244" parent="233" name="p_name">
-      <Position>3</Position>
-      <DataType>varchar(250)|0s</DataType>
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="245" parent="233" name="p_price">
-      <Position>4</Position>
+      <Position>3</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="246" parent="233" name="fk_pt_idx">
+    <column id="246" parent="233" name="p_type_id">
+      <Position>4</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="247" parent="233" name="FK_product_p_type_id">
       <ColNames>p_type_id</ColNames>
     </index>
-    <key id="247" parent="233" name="PRIMARY">
+    <key id="248" parent="233" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>p_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="248" parent="233" name="fk_pt">
+    <foreign-key id="249" parent="233" name="FK_product_p_type_id">
       <ColNames>p_type_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>product_type</RefTableName>
       <RefColNames>pt_id</RefColNames>
     </foreign-key>
-    <column id="249" parent="234" name="pt_id">
+    <column id="250" parent="234" name="pt_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="250" parent="234" name="pt_parent_pt_id">
+    <column id="251" parent="234" name="pt_parent_pt_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="251" parent="234" name="fk_parent_pt_idx">
+    <index id="252" parent="234" name="FK_product_type_pt_parent_pt_id">
       <ColNames>pt_parent_pt_id</ColNames>
     </index>
-    <key id="252" parent="234" name="PRIMARY">
+    <key id="253" parent="234" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>pt_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="253" parent="234" name="fk_parent_pt">
+    <foreign-key id="254" parent="234" name="FK_product_type_pt_parent_pt_id">
       <ColNames>pt_parent_pt_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>product_type</RefTableName>
       <RefColNames>pt_id</RefColNames>
-      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="254" parent="235" name="pr_id">
+    <column id="255" parent="235" name="pr_id">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="255" parent="235" name="product_id">
-      <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="256" parent="235" name="machine_id">
-      <Position>3</Position>
+      <Position>2</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="257" parent="235" name="tool_id">
+    <column id="257" parent="235" name="pr_date">
+      <Position>3</Position>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="258" parent="235" name="tool_id">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="258" parent="235" name="production_order_id">
+    <column id="259" parent="235" name="product_id">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="259" parent="235" name="pr_date">
+    <column id="260" parent="235" name="production_order_id">
       <Position>6</Position>
-      <DataType>datetime|0s</DataType>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="260" parent="235" name="fk_product_idx">
+    <index id="261" parent="235" name="FK_production_product_id">
       <ColNames>product_id</ColNames>
     </index>
-    <index id="261" parent="235" name="fk_production_order_idx">
+    <index id="262" parent="235" name="FK_production_production_order_id">
       <ColNames>production_order_id</ColNames>
     </index>
-    <key id="262" parent="235" name="PRIMARY">
+    <key id="263" parent="235" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>pr_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="263" parent="235" name="fk_product">
+    <foreign-key id="264" parent="235" name="FK_production_product_id">
       <ColNames>product_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>product</RefTableName>
       <RefColNames>p_id</RefColNames>
     </foreign-key>
-    <foreign-key id="264" parent="235" name="fk_pr_production_order">
+    <foreign-key id="265" parent="235" name="FK_production_production_order_id">
       <ColNames>production_order_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>production_order</RefTableName>
       <RefColNames>po_id</RefColNames>
     </foreign-key>
-    <column id="265" parent="236" name="po_id">
+    <column id="266" parent="236" name="po_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="266" parent="236" name="co_id">
+    <column id="267" parent="236" name="co_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="267" parent="236" name="fk_customer_order_idx">
+    <index id="268" parent="236" name="FK_production_customer_order_co_id">
       <ColNames>co_id</ColNames>
     </index>
-    <key id="268" parent="236" name="PRIMARY">
+    <key id="269" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>po_id
 co_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="269" parent="236" name="fk_production_order">
+    <foreign-key id="270" parent="236" name="FK_production_customer_order_po_id">
       <ColNames>po_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>production_order</RefTableName>
       <RefColNames>po_id</RefColNames>
     </foreign-key>
-    <foreign-key id="270" parent="236" name="fk_customer_order">
+    <foreign-key id="271" parent="236" name="FK_production_customer_order_co_id">
       <ColNames>co_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>customer_order</RefTableName>
       <RefColNames>co_id</RefColNames>
     </foreign-key>
-    <column id="271" parent="237" name="po_id">
+    <column id="272" parent="237" name="po_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="272" parent="237" name="co_id">
-      <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="273" parent="237" name="PRIMARY">
@@ -1142,7 +1133,7 @@ co_id</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="276" parent="238" name="fk_po_id_idx">
+    <index id="276" parent="238" name="FK_production_order_items_po_id">
       <ColNames>po_id</ColNames>
     </index>
     <key id="277" parent="238" name="PRIMARY">
@@ -1151,17 +1142,33 @@ co_id</ColNames>
 po_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="278" parent="238" name="fk_p_id">
+    <foreign-key id="278" parent="238" name="FK_production_order_items_p_id">
       <ColNames>p_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>product</RefTableName>
       <RefColNames>p_id</RefColNames>
     </foreign-key>
-    <foreign-key id="279" parent="238" name="fk_po_id">
+    <foreign-key id="279" parent="238" name="FK_production_order_items_po_id">
       <ColNames>po_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>production_order</RefTableName>
       <RefColNames>po_id</RefColNames>
     </foreign-key>
+    <column id="280" parent="239" name="SEQ_NAME">
+      <Position>1</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="281" parent="239" name="SEQ_COUNT">
+      <Position>2</Position>
+      <DataType>decimal(38)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="282" parent="239" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>SEQ_NAME</ColNames>
+      <Primary>1</Primary>
+    </key>
   </database-model>
 </dataSource>

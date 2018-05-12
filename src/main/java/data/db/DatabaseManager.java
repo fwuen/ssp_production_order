@@ -102,4 +102,8 @@ public class DatabaseManager {
         em.persist(customerOrder);
         em.getTransaction().commit();
     }
+
+    public CustomerOrder findCustomerOrderById(int id) {
+        return em.find(CustomerOrder.class, id);
+    }
 }

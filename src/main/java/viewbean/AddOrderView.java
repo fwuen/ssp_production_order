@@ -32,13 +32,22 @@ public class AddOrderView {
     public void submitForm() {
         CustomerOrder customerOrder = new CustomerOrder();
         customerOrder.setCustomerId(customerId);
-        List<ProductionOrder> productionOrders = new ArrayList<>();
-        ProductionOrder productionOrder = new ProductionOrder();
-        productionOrder.setProductionOrderItems(selectedProducts);
-        productionOrders.add(productionOrder);
-        customerOrder.setProductionOrders(productionOrders);
+        List<CustomerOrder> customerOrders = new ArrayList<>();
 
         databaseManager.writeCustomerOrder(customerOrder);
+
+        customerOrders.add(customerOrder);
+
+        //List<ProductionOrder> productionOrders = new ArrayList<>();
+        ProductionOrder productionOrder = new ProductionOrder();
+        productionOrder.setCustomerOrders(customerOrders);
+        //productionOrder.setProductionOrderItems(selectedProducts);
+        //productionOrder.setCustomerOrders(customerOrders);
+        //productionOrders.add(productionOrder);
+        //customerOrder.setProductionOrders(productionOrders);
+
+        databaseManager.writeProductionOrder(productionOrder);
+
     }
 
     public List<Product> allProducts() {

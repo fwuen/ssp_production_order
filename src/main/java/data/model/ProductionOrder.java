@@ -15,6 +15,7 @@ public class ProductionOrder {
     private List<CustomerOrder> customerOrders;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "po_id")
     public int getPoId() {
         return poId;
@@ -34,7 +35,7 @@ public class ProductionOrder {
         this.productionOrderItems = productionOrderItems;
     }
 
-    @ManyToMany(mappedBy = "productionOrders")
+    @ManyToMany(mappedBy = "productionOrders", cascade = {CascadeType.MERGE})
     public List<CustomerOrder> getCustomerOrders() {
         return customerOrders;
     }

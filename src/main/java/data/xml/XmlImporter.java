@@ -67,6 +67,7 @@ public class XmlImporter {
             productToAdd.setpId(Integer.parseInt(product.getChildText("ProductID")));
             productToAdd.setProductTypeByProductId(pt);
             productToAdd.setpName(product.getChildText("ProductName"));
+            productToAdd.setpPrice(Double.parseDouble(product.getChildText("Price")));
 
 
             products.add(productToAdd);

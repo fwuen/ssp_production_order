@@ -30,24 +30,6 @@ public class AddOrderView {
     int customerId;
 
     public void submitForm() {
-        /*
-        CustomerOrder customerOrder = new CustomerOrder();
-        customerOrder.setCustomerId(customerId);
-        List<CustomerOrder> customerOrders = new ArrayList<>();
-
-        databaseManager.writeCustomerOrder(customerOrder);
-
-        customerOrders.add(customerOrder);
-
-        //List<ProductionOrder> productionOrders = new ArrayList<>();
-        ProductionOrder productionOrder = new ProductionOrder();
-        productionOrder.setCustomerOrders(customerOrders);
-        //productionOrder.setProductionOrderItems(selectedProducts);
-        //productionOrder.setCustomerOrders(customerOrders);
-        //productionOrders.add(productionOrder);
-        //customerOrder.setProductionOrders(productionOrders);
-
-        databaseManager.writeProductionOrder(productionOrder);*/
         ProductionOrder productionOrder = new ProductionOrder();
         List<Product> selectedProducts = new ArrayList<>();
         for (String productName : selectedProductNames) {

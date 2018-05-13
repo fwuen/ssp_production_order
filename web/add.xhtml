@@ -20,9 +20,9 @@
             <p:spinner id="customerId" value="#{addOrderViewBean.customerId}" min="1" max="100" />
 
             <p:outputLabel for="products" value="Produkte:" />
-            <p:selectCheckboxMenu id="products" value="#{addOrderViewBean.selectedProducts}" label="Products" multiple="true"
+            <p:selectCheckboxMenu id="products" value="#{addOrderViewBean.selectedProductNames}" label="Products" multiple="true"
                                   filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                <f:selectItems value="#{addOrderViewBean.allProducts}" />
+                <f:selectItems value="#{addOrderViewBean.allProducts}" var="product" itemLabel="#{product.pName}" itemValue="#{product.pName}"/>
             </p:selectCheckboxMenu>
         </p:panelGrid>
         <br></br>

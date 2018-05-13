@@ -76,9 +76,9 @@ public class Product {
     public void setpPrice(Double pPrice) {
         this.pPrice = pPrice;
     }
-
+    /*
     @Override
     public String toString() {
         return this.pName;
-    }
+    }*/
 }

@@ -23,7 +23,7 @@ public class AddOrderView {
 
     @Getter
     @Setter
-    List<Product> selectedProducts = new ArrayList();
+    List<String> selectedProductNames = new ArrayList();
 
     @Getter
     @Setter
@@ -49,7 +49,15 @@ public class AddOrderView {
 
         databaseManager.writeProductionOrder(productionOrder);*/
         ProductionOrder productionOrder = new ProductionOrder();
-        //productionOrder.setProductionOrderItems(selectedProducts);
+        List<Product> selectedProducts = new ArrayList<>();
+        for (String productName : selectedProductNames) {
+            for (Product product : allProducts) {
+                if (product.getpName().equals(productName)) {
+                    selectedProducts.add(product);
+                }
+            }
+        }
+        productionOrder.setProductionOrderItems(selectedProducts);
 
         databaseManager.writeProductionOrder(productionOrder);
 

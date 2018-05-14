@@ -24,6 +24,9 @@
                                   filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
                 <f:selectItems value="#{addOrderViewBean.allProducts}" var="product" itemLabel="#{product.pName}" itemValue="#{product.pName}"/>
             </p:selectCheckboxMenu>
+
+            <p:outputLabel for="targetDate" value="Wunschdatum:" />
+            <p:calendar id="targetDate" value="#{addOrderViewBean.targetDate}" showOn="button" />
         </p:panelGrid>
         <br></br>
         <p:commandButton value="Auftrag anlegen" action="#{addOrderViewBean.submitForm()}" />

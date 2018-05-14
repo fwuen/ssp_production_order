@@ -40,7 +40,7 @@ public class ProductionBean {
         Calendar calendar = Calendar.getInstance();
         for (Production production : productions) {
             calendar.setTimeInMillis(production.getPrTimestamp().getTime());
-            model.add(new TimelineEvent(production.getProductByProductId().getpName(), calendar.getTime()));
+            model.add(new TimelineEvent(production.getProductByProductId().getpName() + " | Prod.-Auftrag #" + production.getProductionOrderByProductionOrderId().getPoId(), calendar.getTime()));
         }
     }
 

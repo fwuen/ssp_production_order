@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @ManagedBean(name = "addOrderViewBean")
@@ -28,6 +29,10 @@ public class AddOrderView {
     @Getter
     @Setter
     int customerId;
+
+    @Getter
+    @Setter
+    Date targetDate;
 
     public void submitForm() {
         ProductionOrder productionOrder = new ProductionOrder();
@@ -49,6 +54,7 @@ public class AddOrderView {
         CustomerOrder customerOrder = new CustomerOrder();
         customerOrder.setCustomerId(customerId);
         customerOrder.setProductionOrders(productionOrders);
+        customerOrder.setTargetDate(new java.sql.Date(targetDate.getTime()));
 
         databaseManager.writeCustomerOrder(customerOrder);
     }

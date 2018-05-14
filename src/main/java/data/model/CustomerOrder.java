@@ -1,6 +1,7 @@
 package data.model;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,6 +11,7 @@ public class CustomerOrder {
     private int coId;
     private Integer customerId;
     private List<ProductionOrder> productionOrders;
+    private Date targetDate;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -55,5 +57,15 @@ public class CustomerOrder {
 
     public void setProductionOrders(List<ProductionOrder> productionOrders) {
         this.productionOrders = productionOrders;
+    }
+
+    @Basic
+    @Column(name = "target_date")
+    public Date getTargetDate() {
+        return targetDate;
+    }
+
+    public void setTargetDate(Date targetDate) {
+        this.targetDate = targetDate;
     }
 }

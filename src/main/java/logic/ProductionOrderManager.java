@@ -1,50 +1,82 @@
 package logic;
 
-import data.model.Order;
-import data.model.Product;
-import data.model.ProductsTargetDate;
+import data.db.DatabaseManager;
+import data.model.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+//TODO
 public class ProductionOrderManager {
+    DatabaseManager databaseManager = new DatabaseManager();
+    List<ProductType> productTypes = databaseManager.findAllProductTypes();
+
     private void createProductionOrdersFromCustomerOrders(List<Order> orders) {
-        List<ProductsTargetDate> productsTargetDates = new ArrayList<>();
+        /*
+        List<ProductTypesTargetDate> productTypesTargetDates = new ArrayList<>();
         boolean productFound = false;
-        ProductsTargetDate productsTargetDateToWorkWith = null;
+        ProductTypesTargetDate productTypesTargetDateToWorkWith = null;
 
         for (Order order : orders) {
             for (Product product : order.getProducts()) {
-                for (ProductsTargetDate productsTargetDate : productsTargetDates) {
-                    if (productsTargetDate.getProductId() == product.getpId()) {
+                for (ProductTypesTargetDate productTypesTargetDate : productTypesTargetDates) {
+                    if (productTypesTargetDate.getProductId() == product.getpId()) {
                         productFound = true;
-                        productsTargetDateToWorkWith = productsTargetDate;
+                        productTypesTargetDateToWorkWith = productTypesTargetDate;
                         break;
                     }
                 }
                 if(!productFound) {
-                    productsTargetDateToWorkWith = new ProductsTargetDate();
+                    productTypesTargetDateToWorkWith = new ProductTypesTargetDate();
                 }
-                productsTargetDateToWorkWith.setNumberOfOrderedProducts(productsTargetDateToWorkWith.getNumberOfOrderedProducts() + 1);
-                productsTargetDateToWorkWith.setProductId(product.getpId());
+                productTypesTargetDateToWorkWith.setNumberOfOrderedProducts(productTypesTargetDateToWorkWith.getNumberOfOrderedProducts() + 1);
+                productTypesTargetDateToWorkWith.setProductId(product.getpId());
             }
-        }
-    }
+        }*/
 
-    private Date findEarliestDate(List<Order> orders) {
-        Date earliest = null;
-        for (Order order : orders) {
-            if (earliest == null) {
-                earliest = order.getTargetDate();
-            }
-            else {
-                if (order.getTargetDate().before(earliest)) {
-                    earliest = order.getTargetDate();
+        List<ProductTypesTargetDate> productTypesTargetDates = new ArrayList<>();
+
+        for (ProductType productType : productTypes) {
+            ProductTypesTargetDate productTypesTargetDate = new ProductTypesTargetDate();
+            productTypesTargetDate.setProductType(productType);
+
+            for (Order order : orders) {
+                boolean customerOrderAdded = false;
+
+                if(productTypesTargetDate.getTargetDate() == null || order.getTargetDate().before(productTypesTargetDate.getTargetDate())) {
+                    productTypesTargetDate.setTargetDate(order.getTargetDate());
+                }
+                for (Product product : order.getProducts()) {
+                    if (product.getProductTypeByProductId().getPtId() == productType.getPtId()) {
+                        productTypesTargetDate.getProducts().add(product);
+
+                        if(!customerOrderAdded) {
+                            customerOrderAdded = true;
+                            CustomerOrder customerOrder = new CustomerOrder();
+                            customerOrder.setTargetDate(new java.sql.Date(order.getTargetDate().getTime()));
+                            customerOrder.setCustomerId(order.getCustomerId());
+                        }
+                    }
                 }
             }
+            productTypesTargetDates.add(productTypesTargetDate);
         }
-        return earliest;
+
+        for (ProductTypesTargetDate productTypesTargetDate : productTypesTargetDates) {
+            ProductionOrder productionOrder = new ProductionOrder();
+            productionOrder.setProductionOrderItems(productTypesTargetDate.getProducts());
+            databaseManager.writeProductionOrder(productionOrder);
+
+            for (CustomerOrder customerOrder : productTypesTargetDate.getCustomerOrders()) {
+                List<ProductionOrder> productionOrders = new ArrayList<>();
+                customerOrder.setProductionOrders(productionOrders);
+                databaseManager.writeCustomerOrder(customerOrder);
+            }
+        }
+
+        /**Hier jetzt Produktion erstellen, speichern**/
+
     }
 
 }

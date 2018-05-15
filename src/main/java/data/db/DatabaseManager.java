@@ -106,4 +106,9 @@ public class DatabaseManager {
     public CustomerOrder findCustomerOrderById(int id) {
         return em.find(CustomerOrder.class, id);
     }
+
+    public List<ProductType> findAllProductTypes() {
+        Query query = em.createQuery("SELECT e FROM ProductType e");
+        return (List<ProductType>) query.getResultList();
+    }
 }

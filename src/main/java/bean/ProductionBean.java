@@ -1,4 +1,4 @@
-package viewbean;
+package bean;
 
 import data.db.DatabaseManager;
 import data.model.Production;

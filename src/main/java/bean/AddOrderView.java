@@ -5,17 +5,21 @@ import data.model.CustomerOrder;
 import data.model.Order;
 import data.model.Product;
 import data.model.ProductionOrder;
+import logic.ProductionOrderManager;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @ManagedBean(name = "addOrderViewBean")
-@ViewScoped
+@SessionScoped
 public class AddOrderView {
     DatabaseManager databaseManager = new DatabaseManager();
 
@@ -39,6 +43,10 @@ public class AddOrderView {
     @Setter
     Date tomorrow = new Date(System.currentTimeMillis() + 86400000);
 
+    @Getter
+    @Setter
+    List<Order> orders = new ArrayList<>();
+
     //TODO
     public void submitForm() {
         /*
@@ -59,6 +67,24 @@ public class AddOrderView {
         }
         newOrder.setProducts(selectedProducts);
         newOrder.setTargetDate(targetDate);
+
+        orders.add(newOrder);
+
+        customerId = 0;
+        targetDate = null;
+        selectedProductNames = new ArrayList<>();
+
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("add.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createProductionOrders() {
+        ProductionOrderManager productionOrderManager = new ProductionOrderManager();
+        productionOrderManager.createProductionOrdersFromCustomerOrders(orders);
+        orders.clear();
     }
 
     private CustomerOrder createCustomerOrder(ProductionOrder productionOrder) {

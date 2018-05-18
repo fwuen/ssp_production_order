@@ -6,6 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{userSessionBean.currentLocale}">
 <h:head>
     <title>Auftrag hinzufügen</title>
 </h:head>
@@ -30,6 +31,8 @@
         </p:panelGrid>
         <br></br>
         <p:commandButton value="Auftrag anlegen" action="#{addOrderViewBean.submitForm()}" />
+        <p:commandButton value="Produktionsaufträge erzeugen" action="#{addOrderViewBean.createProductionOrders()}" />
     </h:form>
 </h:body>
+</f:view>
 </html>

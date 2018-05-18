@@ -6,6 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{userSessionBean.currentLocale}">
     <h:head>
         <title>Produktionsauftragsverwaltung</title>
     </h:head>
@@ -33,4 +34,5 @@
 
         </p:timeline>
     </h:body>
+</f:view>
 </html>

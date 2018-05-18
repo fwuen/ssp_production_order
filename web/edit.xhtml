@@ -5,6 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view locale="#{userSessionBean.currentLocale}">
 <h:head>
     <title>Auftrag bearbeiten</title>
 </h:head>
@@ -13,4 +14,5 @@
         <ui:include src="shared/nav.xhtml" />
     </div>
 </h:body>
+</f:view>
 </html>

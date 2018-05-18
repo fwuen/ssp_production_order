@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.util.LinkedHashMap;
 import java.util.Locale;

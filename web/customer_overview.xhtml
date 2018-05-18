@@ -6,12 +6,14 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <title>Auftrag hinzufügen</title>
-</h:head>
-    <h:body>
-        <div id="navbar">
-            <ui:include src="shared/nav.xhtml" />
-        </div>
-    </h:body>
+    <f:view locale="#{userSessionBean.currentLocale}">
+        <h:head>
+            <title>Auftrag hinzufügen</title>
+        </h:head>
+        <h:body>
+            <div id="navbar">
+                <ui:include src="shared/nav.xhtml" />
+            </div>
+        </h:body>
+    </f:view>
 </html>

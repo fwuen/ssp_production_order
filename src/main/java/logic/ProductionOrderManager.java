@@ -3,16 +3,18 @@ package logic;
 import data.db.DatabaseManager;
 import data.model.*;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
-//TODO
+//TODO mehrere Orders geht noch nicht
 public class ProductionOrderManager {
     DatabaseManager databaseManager = new DatabaseManager();
     List<ProductType> productTypes = databaseManager.findAllProductTypes();
 
-    private void createProductionOrdersFromCustomerOrders(List<Order> orders) {
+    public void createProductionOrdersFromCustomerOrders(List<Order> orders) {
         /*
         List<ProductTypesTargetDate> productTypesTargetDates = new ArrayList<>();
         boolean productFound = false;
@@ -39,16 +41,15 @@ public class ProductionOrderManager {
 
         for (ProductType productType : productTypes) {
             ProductTypesTargetDate productTypesTargetDate = new ProductTypesTargetDate();
-            productTypesTargetDate.setProductType(productType);
-
             for (Order order : orders) {
                 boolean customerOrderAdded = false;
 
-                if(productTypesTargetDate.getTargetDate() == null || order.getTargetDate().before(productTypesTargetDate.getTargetDate())) {
-                    productTypesTargetDate.setTargetDate(order.getTargetDate());
-                }
                 for (Product product : order.getProducts()) {
                     if (product.getProductTypeByProductId().getPtId() == productType.getPtId()) {
+                        if(productTypesTargetDate.getTargetDate() == null || order.getTargetDate().before(productTypesTargetDate.getTargetDate())) {
+                            productTypesTargetDate.setTargetDate(order.getTargetDate());
+                        }
+                        productTypesTargetDate.setProductType(productType);
                         productTypesTargetDate.getProducts().add(product);
 
                         if(!customerOrderAdded) {
@@ -56,6 +57,10 @@ public class ProductionOrderManager {
                             CustomerOrder customerOrder = new CustomerOrder();
                             customerOrder.setTargetDate(new java.sql.Date(order.getTargetDate().getTime()));
                             customerOrder.setCustomerId(order.getCustomerId());
+
+                            List<CustomerOrder> customerOrders = new ArrayList<>();
+                            customerOrders.add(customerOrder);
+                            productTypesTargetDate.setCustomerOrders(customerOrders);
                         }
                     }
                 }
@@ -64,19 +69,38 @@ public class ProductionOrderManager {
         }
 
         for (ProductTypesTargetDate productTypesTargetDate : productTypesTargetDates) {
-            ProductionOrder productionOrder = new ProductionOrder();
-            productionOrder.setProductionOrderItems(productTypesTargetDate.getProducts());
-            databaseManager.writeProductionOrder(productionOrder);
-
-            for (CustomerOrder customerOrder : productTypesTargetDate.getCustomerOrders()) {
+            if(productTypesTargetDate.getProducts().size() > 0) {
                 List<ProductionOrder> productionOrders = new ArrayList<>();
-                customerOrder.setProductionOrders(productionOrders);
-                databaseManager.writeCustomerOrder(customerOrder);
+                ProductionOrder productionOrder = new ProductionOrder();
+                productionOrder.setProductionOrderItems(productTypesTargetDate.getProducts());
+                databaseManager.writeProductionOrder(productionOrder);
+
+                productionOrders.add(productionOrder);
+
+                for (CustomerOrder customerOrder : productTypesTargetDate.getCustomerOrders()) {
+                    customerOrder.setProductionOrders(productionOrders);
+                    databaseManager.writeCustomerOrder(customerOrder);
+                }
+
+                for (Product product : productionOrder.getProductionOrderItems()) {
+                    Production production = new Production();
+                    production.setPrTimestamp(getPrTimestampForTargetDate(productTypesTargetDate.getTargetDate()));
+                    production.setProductionOrderByProductionOrderId(productionOrder);
+                    production.setMachineId(product.getpId() / 10 + 1);
+                    production.setToolId(new Random().nextInt(100) + 1);
+                    production.setProductByProductId(product);
+
+                    databaseManager.writeProduction(production);
+                }
             }
         }
 
-        /**Hier jetzt Produktion erstellen, speichern**/
+    }
 
+    private Timestamp getPrTimestampForTargetDate(Date targetDate) {
+        Date date = new Date(targetDate.getTime() + new Random().nextInt(86400000));
+
+        return new Timestamp(date.getTime());
     }
 
 }

@@ -10,7 +10,7 @@ public class Product {
     private int pId;
     private ProductType productType;
     private String pName;
-    private List<ProductionOrder> productionOrders;
+    private List<ProductionOrderItems> productionOrderItems;
     private Double pPrice;
 
     @Id
@@ -58,6 +58,7 @@ public class Product {
         return Objects.hash(pId, pName);
     }
 
+    /*
     @ManyToMany(mappedBy = "productionOrderItems")
     public List<ProductionOrder> getProductionOrders() {
         return productionOrders;
@@ -65,7 +66,12 @@ public class Product {
 
     public void setProductionOrders(List<ProductionOrder> productionOrders) {
         this.productionOrders = productionOrders;
-    }
+    }*/
+
+    @OneToMany(mappedBy = "productByPId")
+    public List<ProductionOrderItems> getProductionOrderItems() { return this.productionOrderItems; }
+
+    public void setProductionOrderItems(List<ProductionOrderItems> productionOrderItems) { this.productionOrderItems = productionOrderItems; }
 
     @Basic
     @Column(name = "p_price")

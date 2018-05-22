@@ -1,10 +1,7 @@
 package bean;
 
 import data.db.DatabaseManager;
-import data.model.CustomerOrder;
-import data.model.Order;
-import data.model.Product;
-import data.model.ProductionOrder;
+import data.model.*;
 import logic.ProductionOrderManager;
 import lombok.Getter;
 import lombok.Setter;
@@ -62,6 +59,7 @@ public class AddOrderView {
             for (Product product : allProducts) {
                 if (product.getpName().equals(productName)) {
                     selectedProducts.add(product);
+                    break;
                 }
             }
         }
@@ -100,7 +98,9 @@ public class AddOrderView {
 
     private ProductionOrder createProductionOrder() {
         ProductionOrder productionOrder = new ProductionOrder();
+        List<ProductionOrderItems> productionOrderItemsList = new ArrayList<>();
         List<Product> selectedProducts = new ArrayList<>();
+
         for (String productName : selectedProductNames) {
             for (Product product : allProducts) {
                 if (product.getpName().equals(productName)) {
@@ -108,7 +108,15 @@ public class AddOrderView {
                 }
             }
         }
-        productionOrder.setProductionOrderItems(selectedProducts);
+
+        for (Product product : selectedProducts) {
+            ProductionOrderItems productionOrderItems = new ProductionOrderItems();
+            productionOrderItems.setProductionOrderByPoId(productionOrder);
+            productionOrderItems.setProductByPId(product);
+            productionOrderItems.setCnt(1);
+        }
+
+        productionOrder.setProductionOrderItems(productionOrderItemsList);
         return productionOrder;
     }
 

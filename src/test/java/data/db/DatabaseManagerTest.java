@@ -27,25 +27,6 @@ public class DatabaseManagerTest {
         databaseManager.writeProductType(productType);
     }
 
-    @Deprecated
-    @Ignore
-    @Test
-    public void testWriteProductionOrder() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        ProductionOrder productionOrder = new ProductionOrder();
-        Product product = new Product();
-        product.setProductTypeByProductId(databaseManager.findProductTypeById(1));
-        product.setpName("Test1");
-        product.setpId(1);
-        List<Product> productList = new ArrayList<>();
-        productList.add(product);
-        productionOrder.setProductionOrderItems(productList);
-        productionOrder.setPoId(1);
-        databaseManager.writeProductionOrder(productionOrder);
-
-        System.out.println(databaseManager.findProductionOrderById(1).getProductionOrderItems().get(0).getpName());
-    }
-
     @Test
     public void writeProductTypeXmlData() {
         DatabaseManager databaseManager = new DatabaseManager();

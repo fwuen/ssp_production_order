@@ -6,6 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "production", schema = "production_order")
+@TableGenerator(name="production_table_generator", initialValue = 377, allocationSize = 1)
 public class Production {
     private int prId;
     private int machineId;
@@ -15,6 +16,7 @@ public class Production {
     private ProductionOrder productionOrderByProductionOrderId;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY, generator = "production_table_generator")
     @Column(name = "pr_id")
     public int getPrId() {
         return prId;

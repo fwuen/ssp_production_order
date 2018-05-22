@@ -1030,6 +1030,7 @@
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="257" parent="235" name="machine_id">
@@ -1138,39 +1139,44 @@ co_id</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="277" parent="238" name="FK_production_order_items_po_id">
+    <column id="277" parent="238" name="cnt">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="278" parent="238" name="FK_production_order_items_po_id">
       <ColNames>po_id</ColNames>
     </index>
-    <key id="278" parent="238" name="PRIMARY">
+    <key id="279" parent="238" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>p_id
 po_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="279" parent="238" name="FK_production_order_items_p_id">
+    <foreign-key id="280" parent="238" name="FK_production_order_items_p_id">
       <ColNames>p_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>product</RefTableName>
       <RefColNames>p_id</RefColNames>
     </foreign-key>
-    <foreign-key id="280" parent="238" name="FK_production_order_items_po_id">
+    <foreign-key id="281" parent="238" name="FK_production_order_items_po_id">
       <ColNames>po_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>production_order</RefTableName>
       <RefColNames>po_id</RefColNames>
     </foreign-key>
-    <column id="281" parent="239" name="SEQ_NAME">
+    <column id="282" parent="239" name="SEQ_NAME">
       <Position>1</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="282" parent="239" name="SEQ_COUNT">
+    <column id="283" parent="239" name="SEQ_COUNT">
       <Position>2</Position>
       <DataType>decimal(38)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="283" parent="239" name="PRIMARY">
+    <key id="284" parent="239" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SEQ_NAME</ColNames>
       <Primary>1</Primary>

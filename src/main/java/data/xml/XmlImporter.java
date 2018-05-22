@@ -16,7 +16,9 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class XmlImporter {
     private File xmlFileToImport;
@@ -79,6 +81,7 @@ public class XmlImporter {
     @Deprecated
     public List<ProductionOrder> readProductionOrders(List<Product> products) throws IOException, SAXException, ParserConfigurationException {
         List<ProductionOrder> productionOrders = new ArrayList<>();
+
     
         Element root = getXmlDocument().getRootElement();
             
@@ -91,11 +94,32 @@ public class XmlImporter {
 
             ProductionOrder productionOrderToAdd = new ProductionOrder();
             productionOrderToAdd.setPoId(Integer.parseInt(productionOrder.getChildText("ProductionOrderID")));
-            productionOrderToAdd.setProductionOrderItems(productionOrderItems);
+
+            List<ProductionOrderItems> prodItems = new ArrayList();
+
+            ProductionOrderItems currentProdOrderItems = null;
+
+            List<Product> alreadyAddedProducts = new ArrayList<>();
+
+            for(Product product : productionOrderItems) {
+                if(alreadyAddedProducts.contains(product)) {
+                    for(ProductionOrderItems prodOrderItems : prodItems) {
+                        if(prodOrderItems.getProductByPId().getpId() == product.getpId()) {
+                            currentProdOrderItems = prodItems.get(prodItems.indexOf(product));
+                            currentProdOrderItems.setCnt(currentProdOrderItems.getCnt() + 1);
+                        }
+                    }
+                } else {
+                    currentProdOrderItems = new ProductionOrderItems();
+                    currentProdOrderItems.setCnt(1);
+                    currentProdOrderItems.setProductByPId(product);
+                    currentProdOrderItems.setProductionOrderByPoId(productionOrderToAdd);
+                    alreadyAddedProducts.add(product);
+                }
+            }
+            productionOrderToAdd.setProductionOrderItems(prodItems);
 
             productionOrders.add(productionOrderToAdd);
-
-            System.out.println(productionOrderToAdd.getProductionOrderItems().get(0).getpName());
         });
     
         return productionOrders;

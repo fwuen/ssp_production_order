@@ -5,14 +5,11 @@
 
     <persistence-unit name="ProductionOrderPersistenceUnit" transaction-type="RESOURCE_LOCAL">
         <class>data.model.Product</class>
-        <class>data.model.Production</class>
-        <class>data.model.ProductionOrder</class>
-        <class>data.model.ProductType</class>
-        <class>data.model.Product</class>
         <class>data.model.ProductType</class>
         <class>data.model.Production</class>
         <class>data.model.ProductionOrder</class>
         <class>data.model.CustomerOrder</class>
+        <class>data.model.ProductionOrderItems</class>
         <properties>
             <property name="eclipselink.jdbc.bind-parameters" value="true"/>
             <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/production_order?useSSL=false"/>-->

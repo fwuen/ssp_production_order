@@ -103,6 +103,12 @@ public class DatabaseManager {
         em.getTransaction().commit();
     }
 
+    public void writeProductionOrderItems(ProductionOrderItems productionOrderItems) {
+        em.getTransaction().begin();
+        em.persist(productionOrderItems);
+        em.getTransaction().commit();
+    }
+
     public CustomerOrder findCustomerOrderById(int id) {
         return em.find(CustomerOrder.class, id);
     }

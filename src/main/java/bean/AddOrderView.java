@@ -6,6 +6,7 @@ import logic.ProductionOrderManager;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
@@ -46,12 +47,6 @@ public class AddOrderView {
 
     //TODO
     public void submitForm() {
-        /*
-        ProductionOrder productionOrder = createProductionOrder();
-        databaseManager.writeProductionOrder(productionOrder);
-
-        CustomerOrder customerOrder = createCustomerOrder(productionOrder);
-        databaseManager.writeCustomerOrder(customerOrder);*/
         Order newOrder = new Order();
         newOrder.setCustomerId(customerId);
         List<Product> selectedProducts = new ArrayList<>();
@@ -72,17 +67,19 @@ public class AddOrderView {
         targetDate = null;
         selectedProductNames = new ArrayList<>();
 
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("add.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FacesMessage msg;
+        msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Added!", "Order added!");
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void createProductionOrders() {
         ProductionOrderManager productionOrderManager = new ProductionOrderManager();
         productionOrderManager.createProductionOrdersFromCustomerOrders(orders);
         orders.clear();
+
+        FacesMessage msg;
+        msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Created!", "Production orders have been created!");
     }
 
     private CustomerOrder createCustomerOrder(ProductionOrder productionOrder) {

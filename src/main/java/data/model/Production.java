@@ -1,5 +1,11 @@
 package data.model;
 
+import data.db.DatabaseManager;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.ConverterException;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -89,5 +95,10 @@ public class Production {
 
     public void setProductionOrderByProductionOrderId(ProductionOrder productionOrderByProductionOrderId) {
         this.productionOrderByProductionOrderId = productionOrderByProductionOrderId;
+    }
+
+    @Override
+    public String toString() {
+        return "Production " + this.getPrId();
     }
 }

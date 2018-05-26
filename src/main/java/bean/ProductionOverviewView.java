@@ -41,7 +41,7 @@ public class ProductionOverviewView {
         eventModel = new DefaultScheduleModel();
 
         for (Production production : productions) {
-            eventModel.addEvent(new DefaultScheduleEvent(production.getProductByProductId().getpName(), new Date(production.getPrTimestamp().getTime()), new Date(production.getPrTimestamp().getTime())));
+            eventModel.addEvent(new DefaultScheduleEvent(production.getPrId() + ": " + production.getProductByProductId().getpName(), new Date(production.getPrTimestamp().getTime()), new Date(production.getPrTimestamp().getTime())));
         }
     }
 

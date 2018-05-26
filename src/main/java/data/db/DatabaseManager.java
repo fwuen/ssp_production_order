@@ -37,14 +37,15 @@ public class DatabaseManager {
         return (List<Product>) query.getResultList();
     }
     
-    public void removeProduct(Product product) {
-        em.remove(product);
-        em.flush();
-    }
-    
     public void writeProduction(Production production) {
         em.getTransaction().begin();
         em.persist(production);
+        em.getTransaction().commit();
+    }
+
+    public void updateProduction(Production production) {
+        em.getTransaction().begin();
+        em.merge(production);
         em.getTransaction().commit();
     }
     
@@ -53,8 +54,12 @@ public class DatabaseManager {
     }
     
     public void removeProduction(Production production) {
+        em.getTransaction().begin();
+        if (!em.contains(production)) {
+            production = em.merge(production);
+        }
         em.remove(production);
-        em.flush();
+        em.getTransaction().commit();
     }
 
     public List<Production> findAllProductions() {
@@ -73,8 +78,11 @@ public class DatabaseManager {
     }
     
     public void removeProductType(ProductType productType) {
-        em.remove(productType);
-        em.flush();
+        em.getTransaction().begin();
+        if (!em.contains(productType)) {
+            productType = em.merge(productType);
+        }
+        em.getTransaction().commit();
     }
     
     public void writeProductionOrder(ProductionOrder productionOrder) {
@@ -88,8 +96,11 @@ public class DatabaseManager {
     }
     
     public void removeProductionOrder(ProductionOrder productionOrder) {
-        em.remove(productionOrder);
-        em.flush();
+        em.getTransaction().begin();
+        if (!em.contains(productionOrder)) {
+            productionOrder = em.merge(productionOrder);
+        }
+        em.getTransaction().commit();
     }
 
     public List<ProductionOrder> findAllProductionOrders() {
@@ -109,6 +120,12 @@ public class DatabaseManager {
         em.getTransaction().commit();
     }
 
+    public void updateProductionOrderItems(ProductionOrderItems productionOrderItems) {
+        em.getTransaction().begin();
+        em.merge(productionOrderItems);
+        em.getTransaction().commit();
+    }
+
     public CustomerOrder findCustomerOrderById(int id) {
         return em.find(CustomerOrder.class, id);
     }
@@ -116,5 +133,13 @@ public class DatabaseManager {
     public List<ProductType> findAllProductTypes() {
         Query query = em.createQuery("SELECT e FROM ProductType e");
         return (List<ProductType>) query.getResultList();
+    }
+
+    public void removeProductionOrderItems(ProductionOrderItems productionOrderItems) {
+        em.getTransaction().begin();
+        if (!em.contains(productionOrderItems)) {
+            productionOrderItems = em.merge(productionOrderItems);
+        }
+        em.getTransaction().commit();
     }
 }

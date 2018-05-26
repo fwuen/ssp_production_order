@@ -4,8 +4,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui">
 <f:view locale="#{userSessionBean.currentLocale}">
+    <f:metadata>
+        <f:viewParam name="id" value="#{editProductionView.selectedProductionId}" />
+    </f:metadata>
 <h:head>
     <title>Auftrag bearbeiten</title>
 </h:head>
@@ -13,6 +17,42 @@
     <div id="navbar">
         <ui:include src="shared/nav.xhtml" />
     </div>
+    <h2>Produktion bearbeiten</h2>
+    <h:form>
+        <p:growl id="msgs" showDetail="true" />
+        <p:panel header="Produktion auswählen" style="margin-bottom:10px;">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel for="production" value="Produktion:" />
+                <p:selectOneMenu id="production" value="#{editProductionView.selectedProduction}" style="width:150px">
+                    <f:selectItem itemLabel="Produktion wählen" itemValue="" noSelectionOption="true" />
+                    <f:selectItems value="#{productionBean.allProductions()}" />
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <p:separator />
+
+            <p:commandButton value="Submit" update="msgs" actionListener="#{editProductionView.selectProduction()}" icon="ui-icon-check" ajax="false" />
+        </p:panel>
+        <p:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
+            <p:outputLabel for="product" value="Produkt:" />
+            <p:inputText id="product" value="#{editProductionView.product.pName}" disabled="true" />
+
+            <p:outputLabel for="machine" value="Maschine:" />
+            <p:inputNumber id="machine" value="#{editProductionView.machine}" decimalPlaces="0" />
+
+            <p:outputLabel for="tool" value="Tool:" />
+            <p:inputNumber id="tool" value="#{editProductionView.tool}" decimalPlaces="0" />
+
+            <p:outputLabel for="date" value="Date:" />
+            <p:calendar id="date" value="#{editProductionView.date}" pattern="yyyy-MM-dd HH:mm:ss" />
+
+            <p:outputLabel for="productionOrder" value="Produktions-Auftrag:" />
+            <p:inputNumber id="productionOrder" value="#{editProductionView.productionOrder.poId}" disabled="true" decimalPlaces="0" />
+        </p:panelGrid>
+        <br></br>
+        <p:commandButton value="Produktion bearbeiten" action="#{editProductionView.submitForm()}" />
+        <p:commandButton value="Produktion löschen" action="#{editProductionView.deleteProduction()}" />
+    </h:form>
 </h:body>
 </f:view>
 </html>

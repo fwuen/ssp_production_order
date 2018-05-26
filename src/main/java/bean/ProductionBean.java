@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import java.util.Calendar;
 import java.util.List;
 
+//TODO Refactor
 @ManagedBean(name = "productionBean")
 @ViewScoped
 public class ProductionBean {

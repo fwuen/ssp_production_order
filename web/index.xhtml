@@ -30,7 +30,7 @@
                     showCurrentTime="#{productionBean.showCurrentTime}"
                     showNavigation="#{productionBean.showNavigation}">
 
-            <p:ajax event="select" listener="#{basicTimelineView.onSelect}"/>
+            <p:ajax event="select" listener="#{productionBean.onSelect}"/>
 
         </p:timeline>
     </h:body>

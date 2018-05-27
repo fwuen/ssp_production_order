@@ -17,6 +17,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,24 @@ public class ProductionOverviewView {
     @Setter
     private List<Production> productions = allProductions();
 
+    @Getter
+    @Setter
+    private List<Production> productionsOrderedByDate = allProductionsOrderedByDate();
+
+    private List<Production> allProductionsOrderedByDate() {
+        return new DatabaseManager().findProductionsByProductionDate();
+    }
+/*
+    public boolean isScheduleActive() {
+        return isScheduleActive;
+    }
+
+    public boolean getIsScheduleActive() {
+        return isScheduleActive;
+    }*/
+
+    //private boolean isScheduleActive;
+
     @PostConstruct
     public void init() {
         eventModel = new DefaultScheduleModel();
@@ -52,25 +71,33 @@ public class ProductionOverviewView {
 
     public void onEventSelect(SelectEvent selectEvent) {
         event = (ScheduleEvent) selectEvent.getObject();
-    }
+        StringBuilder numberAsString = new StringBuilder();
 
-    public void onDateSelect(SelectEvent selectEvent) {
-        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
-    }
+        for (int i = 0; i < event.getTitle().length(); ++i) {
+            if (Character.isDigit(event.getTitle().charAt(i))) {
+                numberAsString.append(event.getTitle().charAt(i));
+            } else {
+                break;
+            }
+        }
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("edit.xhtml?id=" + Integer.parseInt(numberAsString.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    public void onEventMove(ScheduleEntryMoveEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-
-        addMessage(message);
-    }
-
-    public void onEventResize(ScheduleEntryResizeEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-
-        addMessage(message);
     }
 
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+    /*
+    public void setScheduleVisibility() {
+        if (isScheduleActive) {
+            isScheduleActive = false;
+        } else {
+            isScheduleActive = true;
+        }
+    }*/
 }

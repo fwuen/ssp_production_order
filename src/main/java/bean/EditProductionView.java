@@ -20,7 +20,6 @@ import java.util.Date;
 @SessionScoped
 public class EditProductionView {
     @Getter
-    @Setter
     private int selectedProductionId;
 
     @Getter
@@ -95,5 +94,11 @@ public class EditProductionView {
                 }
             }
         }
+    }
+
+    public void setSelectedProductionId(int selectedProductionId) {
+        this.selectedProductionId = selectedProductionId;
+        selectedProduction = new DatabaseManager().findProductionById(selectedProductionId);
+        selectProduction();
     }
 }

@@ -15,15 +15,23 @@
             <ui:include src="shared/nav.xhtml" />
         </div>
         <h:form>
+            <!--
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                <h:outputText value="Schedule: " />
+                <p:inputSwitch value="#{productionOverviewView.isScheduleActive}">
+                    <p:ajax execute="schedulePanel" render="schedulePanel" listener="#{productionOverviewView.setScheduleVisibility()}" />
+                </p:inputSwitch>
+            </h:panelGrid>-->
+
             <p:growl id="messages" showDetail="true" />
 
-            <h:panelGrid columnClasses="value">
+            <h:panelGrid id="schedulePanel" columnClasses="value"> <!--rendered="#{productionOverviewView.isScheduleActive}" -->
                 <h2>Produktionsübersicht</h2>
                 <p:schedule id="schedule" value="#{productionOverviewView.eventModel}" widgetVar="myschedule" timeZone="GMT+1" draggable="false">
 
-                    <p:ajax event="dateSelect" listener="#{productionOverviewView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                    <!--<p:ajax event="eventSelect" listener="#{productionOverviewView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                    <p:ajax event="eventMove" listener="#{productionOverviewView.onEventMove}" update="messages" />
+                    <!--<p:ajax event="dateSelect" listener="#{productionOverviewView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />-->
+                    <p:ajax event="eventSelect" listener="#{productionOverviewView.onEventSelect}" />
+                    <!--<p:ajax event="eventMove" listener="#{productionOverviewView.onEventMove}" update="messages" />
                     <p:ajax event="eventResize" listener="#{productionOverviewView.onEventResize}" update="messages" />-->
 
                 </p:schedule>
@@ -47,6 +55,38 @@
                     <p:commandButton id="addButton" value="Save" actionListener="#{productionOverviewView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                 </h:panelGrid>
             </p:dialog>
+        </h:form>
+        <h:form>
+            <p:dataScroller value="#{productionOverviewView.productionsOrderedByDate}" var="production" chunkSize="10" style="width:50%">
+                <f:facet name="header">
+                    Productions ordered by production date (ascending)
+                </f:facet>
+
+                <h:panelGrid columns="4" style="width:100%" columnClasses="detail">
+                    <p:outputPanel>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Id:" />
+                            <h:outputText value="#{production.prId}" style="font-weight: bold"/>
+
+                            <h:outputText value="Machine:" />
+                            <h:outputText value="#{production.machineId}" style="font-weight: bold"/>
+
+                            <h:outputText value="Tool:" />
+                            <h:outputText value="#{production.toolId}" style="font-weight: bold"/>
+
+                            <h:outputText value="Product:" />
+                            <h:outputText value="#{production.productByProductId.pName}" style="font-weight: bold"/>
+
+                            <h:outputText value="Date:" />
+                            <h:outputText value="#{production.prTimestamp}" style="font-weight: bold"/>
+
+                            <h:outputText value="Production order:" />
+                            <h:outputText value="#{production.productionOrderByProductionOrderId.poId}" style="font-weight: bold"/>
+                        </h:panelGrid>
+                        <p:separator />
+                    </p:outputPanel>
+                </h:panelGrid>
+            </p:dataScroller>
         </h:form>
     </h:body>
 </f:view>

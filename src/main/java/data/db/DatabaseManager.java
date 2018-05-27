@@ -6,7 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseManager {
     private EntityManager em;
@@ -141,5 +146,14 @@ public class DatabaseManager {
             productionOrderItems = em.merge(productionOrderItems);
         }
         em.getTransaction().commit();
+    }
+
+    public List<Production> findProductionsByProductionDate() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Production> q = cb.createQuery(Production.class);
+        Root<Production> from = q.from(Production.class);
+        q.select(from);
+        q.orderBy(cb.asc(from.get("prTimestamp")));
+        return em.createQuery(q).getResultList();
     }
 }

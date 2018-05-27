@@ -11,13 +11,12 @@
             <p:menuitem value="#{msg.NewOrder}" icon="fa fa-plus" url="add.xhtml" />
             <p:menuitem value="#{msg.Edit}" icon="fa fa-edit" url="edit.xhtml" />
             <p:submenu label="#{msg.Overviews}" icon="fa fa-align-left">
-                <p:menuitem value="#{msg.CustomerOverview}" url="#" />
-                <p:menuitem value="#{msg.ProductOverview}" url="#" />
+                <p:menuitem value="#{msg.ProductOverview}" url="product_overview.xhtml" />
                 <p:menuitem value="#{msg.ProductionOverview}" url="production_overview.xhtml" />
             </p:submenu>
             <p:submenu label="Rankings" icon="fa fa-bar-chart-o">
                 <p:menuitem value="#{msg.ProductRanking}" url="product_ranking.xhtml" />
-                <p:menuitem value="#{msg.ProductionRanking}" />
+                <p:menuitem value="#{msg.CustomerRanking}" />
             </p:submenu>
 
             <f:facet name="options">

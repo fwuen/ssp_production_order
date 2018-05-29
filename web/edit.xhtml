@@ -11,47 +11,47 @@
         <f:viewParam name="id" value="#{editProductionView.selectedProductionId}" />
     </f:metadata>
 <h:head>
-    <title>Auftrag bearbeiten</title>
+    <title>#{msg.EditOrder}</title>
 </h:head>
 <h:body>
     <div id="navbar">
         <ui:include src="shared/nav.xhtml" />
     </div>
-    <h2>Produktion bearbeiten</h2>
+    <h2>#{msg.EditOrder}</h2>
     <h:form>
         <p:growl id="msgs" showDetail="true" />
-        <p:panel header="Produktion auswählen" style="margin-bottom:10px;">
+        <p:panel header="#{msg.ChooseProduction}" style="margin-bottom:10px;">
             <h:panelGrid columns="2" cellpadding="5">
-                <p:outputLabel for="production" value="Produktion:" />
+                <p:outputLabel for="production" value="#{msg.Production}:" />
                 <p:selectOneMenu id="production" value="#{editProductionView.selectedProduction}" style="width:150px">
-                    <f:selectItem itemLabel="Produktion wählen" itemValue="" noSelectionOption="true" />
+                    <f:selectItem itemLabel="#{msg.ChooseProduction}" itemValue="" noSelectionOption="true" />
                     <f:selectItems value="#{productionBean.allProductions()}" />
                 </p:selectOneMenu>
             </h:panelGrid>
 
             <p:separator />
 
-            <p:commandButton value="Submit" update="msgs" actionListener="#{editProductionView.selectProduction()}" icon="ui-icon-check" ajax="false" />
+            <p:commandButton value="#{msg.Submit}" update="msgs" actionListener="#{editProductionView.selectProduction()}" icon="ui-icon-check" ajax="false" />
         </p:panel>
         <p:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
-            <p:outputLabel for="product" value="Produkt:" />
+            <p:outputLabel for="product" value="#{msg.Product}:" />
             <p:inputText id="product" value="#{editProductionView.product.pName}" disabled="true" />
 
-            <p:outputLabel for="machine" value="Maschine:" />
+            <p:outputLabel for="machine" value="#{msg.Machine}:" />
             <p:inputNumber id="machine" value="#{editProductionView.machine}" decimalPlaces="0" />
 
-            <p:outputLabel for="tool" value="Tool:" />
+            <p:outputLabel for="tool" value="#{msg.Tool}:" />
             <p:inputNumber id="tool" value="#{editProductionView.tool}" decimalPlaces="0" />
 
-            <p:outputLabel for="date" value="Date:" />
+            <p:outputLabel for="date" value="#{msg.ProductionDate}:" />
             <p:calendar id="date" value="#{editProductionView.date}" pattern="yyyy-MM-dd HH:mm:ss" />
 
-            <p:outputLabel for="productionOrder" value="Produktions-Auftrag:" />
+            <p:outputLabel for="productionOrder" value="#{msg.ProductionOrder}:" />
             <p:inputNumber id="productionOrder" value="#{editProductionView.productionOrder.poId}" disabled="true" decimalPlaces="0" />
         </p:panelGrid>
         <br></br>
-        <p:commandButton value="Produktion bearbeiten" action="#{editProductionView.submitForm()}" />
-        <p:commandButton value="Produktion löschen" action="#{editProductionView.deleteProduction()}" />
+        <p:commandButton value="#{msg.EditProduction}" action="#{editProductionView.submitForm()}" />
+        <p:commandButton value="#{msg.DeleteProduction}" action="#{editProductionView.deleteProduction()}" />
     </h:form>
 </h:body>
 </f:view>

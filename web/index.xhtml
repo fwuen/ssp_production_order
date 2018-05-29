@@ -8,13 +8,13 @@
       xmlns:p="http://primefaces.org/ui">
 <f:view locale="#{userSessionBean.currentLocale}">
     <h:head>
-        <title>Produktionsauftragsverwaltung</title>
+        <title>#{msg.ProductionOrderManagement}</title>
     </h:head>
     <h:body>
         <div id="navbar">
             <ui:include src="shared/nav.xhtml" />
         </div>
-        <h2>Produktionsauftragsverwaltung</h2>
+        <h2>#{msg.ProductionOrderManagement}</h2>
 
         <p:growl id="growl" showSummary="true" showDetail="true">
             <p:autoUpdate />

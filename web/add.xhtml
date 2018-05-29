@@ -14,27 +14,27 @@
     <div id="navbar">
         <ui:include src="shared/nav.xhtml" />
     </div>
-    <h2>Auftrag hinzufügen</h2>
+    <h2>#{msg.AddOrder}</h2>
     <h:form>
         <p:growl id="msgs" showDetail="true" />
         <p:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
-            <p:outputLabel for="customerId" value="Kunden-ID:" />
+            <p:outputLabel for="customerId" value="#{msg.CustomerID}:" />
             <p:spinner id="customerId" value="#{addOrderViewBean.customerId}" min="1" max="100" required="true" />
 
-            <p:outputLabel for="products" value="Produkte:" />
+            <p:outputLabel for="products" value="#{msg.Products}:" />
             <p:selectCheckboxMenu id="products" value="#{addOrderViewBean.selectedProductNames}" label="Products" multiple="true"
                                   filter="true" filterMatchMode="startsWith" panelStyle="width:250px" required="true">
                 <f:selectItems value="#{addOrderViewBean.allProducts}" var="product" itemLabel="#{product.pName}" itemValue="#{product.pName}"/>
             </p:selectCheckboxMenu>
 
-            <p:outputLabel for="targetDate" value="Wunschdatum:" />
+            <p:outputLabel for="targetDate" value="#{msg.TargetDate}:" />
             <p:calendar id="targetDate" value="#{addOrderViewBean.targetDate}" showOn="button" mindate="#{addOrderViewBean.tomorrow}" />
         </p:panelGrid>
         <br></br>
-        <p:commandButton update="msgs" value="Auftrag anlegen" actionListener="#{addOrderViewBean.submitForm()}" ajax="false" />
+        <p:commandButton update="msgs" value="#{msg.CreateOrder}" actionListener="#{addOrderViewBean.submitForm()}" ajax="false" />
     </h:form>
 
-    <p:commandButton value="Produktionsaufträge erzeugen" action="#{addOrderViewBean.createProductionOrders()}" />
+    <p:commandButton value="#{msg.CreateProductionOrders}" action="#{addOrderViewBean.createProductionOrders()}" />
 </h:body>
 </f:view>
 </html>

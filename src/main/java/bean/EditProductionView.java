@@ -5,7 +5,6 @@ import data.model.Product;
 import data.model.Production;
 import data.model.ProductionOrder;
 import data.model.ProductionOrderItems;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +14,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 @ManagedBean
 @SessionScoped
@@ -46,6 +46,8 @@ public class EditProductionView {
     @Setter
     private ProductionOrder productionOrder;
 
+    ResourceBundle msgs = ResourceBundle.getBundle("international.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+
     public void selectProduction() {
         machine = selectedProduction.getMachineId();
         product = selectedProduction.getProductByProductId();
@@ -55,9 +57,9 @@ public class EditProductionView {
 
         FacesMessage msg;
         if (selectedProduction != null) {
-            msg = new FacesMessage("Selected", selectedProduction.toString());
+            msg = new FacesMessage(msgs.getString("Selected"), selectedProduction.toString());
         } else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "No production selected!");
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msgs.getString("InvalidProduction"), msgs.getString("NoProductionSelection"));
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }

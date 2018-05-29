@@ -44,16 +44,6 @@ public class ProductionOverviewView {
     private List<Production> allProductionsOrderedByDate() {
         return new DatabaseManager().findProductionsByProductionDate();
     }
-/*
-    public boolean isScheduleActive() {
-        return isScheduleActive;
-    }
-
-    public boolean getIsScheduleActive() {
-        return isScheduleActive;
-    }*/
-
-    //private boolean isScheduleActive;
 
     @PostConstruct
     public void init() {
@@ -88,16 +78,15 @@ public class ProductionOverviewView {
 
     }
 
+    public void redirectToEdit(int id) {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("edit.xhtml?id=" + id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-
-    /*
-    public void setScheduleVisibility() {
-        if (isScheduleActive) {
-            isScheduleActive = false;
-        } else {
-            isScheduleActive = true;
-        }
-    }*/
 }

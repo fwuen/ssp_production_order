@@ -8,12 +8,39 @@
       xmlns:p="http://primefaces.org/ui">
 <f:view locale="#{userSessionBean.currentLocale}">
 <h:head>
-    <title>Auftrag hinzufügen</title>
+    <title>#{msg.ProductOverview}</title>
 </h:head>
 <h:body>
     <div id="navbar">
         <ui:include src="shared/nav.xhtml" />
     </div>
+    <h2>#{msg.ProductOverview}</h2>
+    <h:form>
+        <p:dataScroller value="#{productBean.allProducts}" var="product" chunkSize="10" style="width:50%">
+            <f:facet name="header">
+                Products
+            </f:facet>
+
+            <h:panelGrid columns="2" style="width:100%" columnClasses="detail">
+                <p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Id:" />
+                        <h:outputText value="#{product.pId}" style="font-weight: bold"/>
+
+                        <h:outputText value="Name:" />
+                        <h:outputText value="#{product.pName}" style="font-weight: bold"/>
+
+                        <h:outputText value="Price:" />
+                        <h:outputText value="#{product.pPrice} €" style="font-weight: bold"/>
+
+                        <h:outputText value="Type:" />
+                        <h:outputText value="#{product.productTypeByProductId.ptId}" style="font-weight: bold"/>
+                    </h:panelGrid>
+                    <p:separator />
+                </p:outputPanel>
+            </h:panelGrid>
+        </p:dataScroller>
+    </h:form>
 </h:body>
 </f:view>
 </html>

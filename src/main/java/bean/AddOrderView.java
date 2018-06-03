@@ -2,10 +2,12 @@ package bean;
 
 import data.db.DatabaseManager;
 import data.model.*;
+import ejb.ProductionOrderLocal;
 import logic.ProductionOrderManager;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @ManagedBean(name = "addOrderViewBean")
 @SessionScoped
@@ -45,7 +48,11 @@ public class AddOrderView {
     @Setter
     List<Order> orders = new ArrayList<>();
 
-    //TODO
+    @EJB
+    ProductionOrderLocal productionOrder;
+
+    ResourceBundle msgs = ResourceBundle.getBundle("internationalization.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+
     public void submitForm() {
         Order newOrder = new Order();
         newOrder.setCustomerId(customerId);
@@ -68,18 +75,19 @@ public class AddOrderView {
         selectedProductNames = new ArrayList<>();
 
         FacesMessage msg;
-        msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Added!", "Order added!");
+        msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msgs.getString("Added"), msgs.getString("OrderAdded"));
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void createProductionOrders() {
-        ProductionOrderManager productionOrderManager = new ProductionOrderManager();
-        productionOrderManager.createProductionOrdersFromCustomerOrders(orders);
+        //ProductionOrderManager productionOrderManager = new ProductionOrderManager();
+        //productionOrderManager.createProductionOrdersFromCustomerOrders(orders);
+        productionOrder.writeProductionOrders(orders);
         orders.clear();
 
-        FacesMessage msg;
-        msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Created!", "Production orders have been created!");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msgs.getString("Created"), msgs.getString("ProductionOrderCreated"));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     private CustomerOrder createCustomerOrder(ProductionOrder productionOrder) {

@@ -1,6 +1,7 @@
 package bean;
 
 import data.db.DatabaseManager;
+import data.db.ProductionProvider;
 import data.model.Production;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +43,7 @@ public class ProductionOverviewView {
     private List<Production> productionsOrderedByDate = allProductionsOrderedByDate();
 
     private List<Production> allProductionsOrderedByDate() {
-        return new DatabaseManager().findProductionsByProductionDate();
+        return new ProductionProvider().findProductionsByProductionDate();
     }
 
     @PostConstruct
@@ -69,24 +70,21 @@ public class ProductionOverviewView {
             } else {
                 break;
             }
-        }
+        }/*
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("edit.xhtml?id=" + Integer.parseInt(numberAsString.toString()));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("edit_from_reference.xhtml?id=" + Integer.parseInt(numberAsString.toString()));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+        redirectToEdit(Integer.parseInt(numberAsString.toString()));
 
     }
 
     public void redirectToEdit(int id) {
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("edit.xhtml?id=" + id);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("edit_from_reference.xhtml?id=" + id);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void addMessage(FacesMessage message) {
-        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

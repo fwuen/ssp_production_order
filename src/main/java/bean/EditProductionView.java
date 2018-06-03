@@ -46,7 +46,7 @@ public class EditProductionView {
     @Setter
     private ProductionOrder productionOrder;
 
-    ResourceBundle msgs = ResourceBundle.getBundle("international.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+    ResourceBundle msgs = ResourceBundle.getBundle("internationalization.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     public void selectProduction() {
         machine = selectedProduction.getMachineId();

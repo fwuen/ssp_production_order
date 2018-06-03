@@ -13,7 +13,9 @@ import org.primefaces.model.chart.HorizontalBarChartModel;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @ManagedBean(name = "productRankingView")
 @ViewScoped
@@ -25,6 +27,8 @@ public class ProductRankingView {
     private List<Product> products = allProducts();
 
     private List<Production> productions = allProductions();
+
+    ResourceBundle msgs = ResourceBundle.getBundle("internationalization.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     @PostConstruct
     public void init() {
@@ -41,12 +45,12 @@ public class ProductRankingView {
         }
 
         horizontalBarChartModel.addSeries(productsChartSeries);
-        horizontalBarChartModel.setTitle("Produktübersicht");
+        horizontalBarChartModel.setTitle(msgs.getString("ProductRanking"));
         Axis xAxis = horizontalBarChartModel.getAxis(AxisType.X);
-        xAxis.setLabel("Produktionen");
+        xAxis.setLabel(msgs.getString("Productions"));
 
         Axis yAxis = horizontalBarChartModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Produkte");
+        yAxis.setLabel(msgs.getString("Products"));
     }
 
     private List<Product> allProducts() {

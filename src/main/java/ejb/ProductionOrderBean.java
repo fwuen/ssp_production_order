@@ -1,17 +1,22 @@
-package logic;
+package ejb;
 
 import data.db.DatabaseManager;
 import data.model.*;
 
+import javax.ejb.Local;
+import javax.ejb.Remote;
+import javax.ejb.Singleton;
 import java.sql.Timestamp;
 import java.util.*;
 
-public class ProductionOrderManager {
+@Singleton
+@Local(ProductionOrderLocal.class)
+@Remote(ProductionOrder.class)
+public class ProductionOrderBean implements ProductionOrder, ProductionOrderLocal {
     DatabaseManager databaseManager = new DatabaseManager();
-    List<ProductType> productTypes = databaseManager.findAllProductTypes();
 
-    //todo: das hier ausreichend testen!
-    public void createProductionOrdersFromCustomerOrders(List<Order> orders) {
+    @Override
+    public void writeProductionOrders(List<Order> orders) {
         Map<ProductType, ProductTypesTargetDate> productTypesTargetDates = new HashMap<>();
         List<CustomerOrder> customerOrders = new ArrayList<>();
 
@@ -46,8 +51,8 @@ public class ProductionOrderManager {
 
         for (Map.Entry<ProductType, ProductTypesTargetDate> productTypesTargetDate : productTypesTargetDates.entrySet()) {
             if (productTypesTargetDate.getValue().getProducts().size() > 0) {
-                List<ProductionOrder> productionOrders = new ArrayList<>();
-                ProductionOrder productionOrder = new ProductionOrder();
+                List<data.model.ProductionOrder> productionOrders = new ArrayList<>();
+                data.model.ProductionOrder productionOrder = new data.model.ProductionOrder();
                 List<ProductionOrderItems> productionOrderItemsList = new ArrayList<>();
 
                 for (Product product : productTypesTargetDate.getValue().getProducts()) {
@@ -76,7 +81,7 @@ public class ProductionOrderManager {
                     if (customerOrder.getProductionOrders() == null) {
                         customerOrder.setProductionOrders(productionOrders);
                     } else {
-                        for (ProductionOrder productionOrderToAdd : productionOrders) {
+                        for (data.model.ProductionOrder productionOrderToAdd : productionOrders) {
                             if (!customerOrder.getProductionOrders().contains(productionOrderToAdd)) {
                                 customerOrder.getProductionOrders().add(productionOrderToAdd);
                             }
@@ -109,5 +114,4 @@ public class ProductionOrderManager {
 
         return new Timestamp(date.getTime());
     }
-
 }

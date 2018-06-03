@@ -15,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.util.Calendar;
 import java.util.List;
+import java.util.ResourceBundle;
 
 //TODO Refactor
 @ManagedBean(name = "productionBean")
@@ -35,13 +36,15 @@ public class ProductionBean {
     @Setter
     private List<Production> productions = allProductions();
 
+    ResourceBundle msgs = ResourceBundle.getBundle("internationalization.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+
     @PostConstruct
     protected void initialize() {
         model = new TimelineModel();
         Calendar calendar = Calendar.getInstance();
         for (Production production : productions) {
             calendar.setTimeInMillis(production.getPrTimestamp().getTime());
-            model.add(new TimelineEvent(production.getProductByProductId().getpName() + " | Prod.-Auftrag #" + production.getProductionOrderByProductionOrderId().getPoId(), calendar.getTime()));
+            model.add(new TimelineEvent(production.getProductByProductId().getpName() + " | " + msgs.getString("ProdOrder") + " #" + production.getProductionOrderByProductionOrderId().getPoId(), calendar.getTime()));
         }
     }
 
@@ -53,7 +56,7 @@ public class ProductionBean {
     public void onSelect(TimelineSelectEvent e) {
         TimelineEvent timelineEvent = e.getTimelineEvent();
 
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected event:", timelineEvent.getData().toString());
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msgs.getString("SelectedEvent"), timelineEvent.getData().toString());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 

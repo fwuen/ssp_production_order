@@ -7,6 +7,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <f:view locale="#{userSessionBean.currentLocale}">
+    <f:metadata>
+        <f:viewParam name="id" value="#{editProductionView.selectedProductionId}" required="false" />
+    </f:metadata>
 <h:head>
     <title>#{msg.EditOrder}</title>
 </h:head>
@@ -17,28 +20,15 @@
     <h2>#{msg.EditOrder}</h2>
     <h:form>
         <p:growl id="msgs" showDetail="true" />
-        <p:panel header="#{msg.ChooseProduction}" style="margin-bottom:10px;">
-            <h:panelGrid columns="2" cellpadding="5">
-                <p:outputLabel for="production" value="#{msg.Production}:" />
-                <p:selectOneMenu id="production" value="#{editProductionView.selectedProduction}" style="width:150px">
-                    <f:selectItem itemLabel="#{msg.ChooseProduction}" itemValue="" noSelectionOption="true" />
-                    <f:selectItems value="#{productionBean.allProductions()}" />
-                </p:selectOneMenu>
-            </h:panelGrid>
-
-            <p:separator />
-
-            <p:commandButton value="#{msg.Submit}" update="msgs" actionListener="#{editProductionView.selectProduction()}" icon="ui-icon-check" ajax="false" />
-        </p:panel>
         <p:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
             <p:outputLabel for="product" value="#{msg.Product}:" />
             <p:inputText id="product" value="#{editProductionView.product.pName}" disabled="true" />
 
             <p:outputLabel for="machine" value="#{msg.Machine}:" />
-            <p:inputNumber id="machine" value="#{editProductionView.machine}" decimalPlaces="0" minValue="1" />
+            <p:inputNumber id="machine" value="#{editProductionView.machine}" decimalPlaces="0" />
 
             <p:outputLabel for="tool" value="#{msg.Tool}:" />
-            <p:inputNumber id="tool" value="#{editProductionView.tool}" decimalPlaces="0" minValue="1" />
+            <p:inputNumber id="tool" value="#{editProductionView.tool}" decimalPlaces="0" />
 
             <p:outputLabel for="date" value="#{msg.ProductionDate}:" />
             <p:calendar id="date" value="#{editProductionView.date}" pattern="yyyy-MM-dd HH:mm:ss" />

@@ -8,17 +8,17 @@
       xmlns:p="http://primefaces.org/ui">
 <f:view locale="#{userSessionBean.currentLocale}">
     <h:head>
-        <title>Production Overview</title>
+        <title>#{msg.ProductionOverview}</title>
     </h:head>
     <h:body>
         <div id="navbar">
             <ui:include src="shared/nav.xhtml" />
         </div>
-        <h2>Produktionsübersicht</h2>
+        <h2>#{msg.ProductionOverview}</h2>
         <h:form>
             <p:dataScroller value="#{productionOverviewView.productionsOrderedByDate}" var="production" chunkSize="10" style="width:50%">
                 <f:facet name="header">
-                    Productions ordered by production date (ascending)
+                    #{msg.ProductionsOrderedByDateAsc}
                 </f:facet>
 
                 <h:panelGrid columns="2" style="width:100%" columnClasses="detail">

@@ -18,22 +18,24 @@
     <h:form>
         <p:dataScroller value="#{productBean.allProducts}" var="product" chunkSize="10" style="width:50%">
             <f:facet name="header">
-                Products
+                #{msg.Products}
             </f:facet>
 
             <h:panelGrid columns="2" style="width:100%" columnClasses="detail">
                 <p:outputPanel>
                     <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputText value="Id:" />
+                        <h:outputText value="#{msg.Id}:" />
                         <h:outputText value="#{product.pId}" style="font-weight: bold"/>
 
-                        <h:outputText value="Name:" />
+                        <h:outputText value="#{msg.Name}:" />
                         <h:outputText value="#{product.pName}" style="font-weight: bold"/>
 
-                        <h:outputText value="Price:" />
-                        <h:outputText value="#{product.pPrice} €" style="font-weight: bold"/>
+                        <h:outputText value="#{msg.Price}:" />
+                        <h:outputText value="#{product.pPrice}" style="font-weight: bold">
+                            <f:convertNumber currencySymbol="€" type="currency" />
+                        </h:outputText>
 
-                        <h:outputText value="Type:" />
+                        <h:outputText value="#{msg.Type}:" />
                         <h:outputText value="#{product.productTypeByProductId.ptId}" style="font-weight: bold"/>
                     </h:panelGrid>
                     <p:separator />

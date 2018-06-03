@@ -3,7 +3,6 @@ package bean;
 import data.db.DatabaseManager;
 import data.model.*;
 import ejb.ProductionOrderLocal;
-import logic.ProductionOrderManager;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,5 +1,6 @@
 package data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import data.db.DatabaseManager;
 
 import javax.faces.application.FacesMessage;

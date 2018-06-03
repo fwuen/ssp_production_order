@@ -1,5 +1,7 @@
 package data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +36,7 @@ public class Product {
     }
 
     @ManyToOne(cascade = {CascadeType.MERGE})
+    @JsonIgnore
     @JoinColumn(name = "p_type_id", referencedColumnName = "pt_id", nullable = false)
     public ProductType getProductTypeByProductId() {
         return productType;
@@ -69,6 +72,7 @@ public class Product {
     }*/
 
     @OneToMany(mappedBy = "productByPId")
+    @JsonIgnore
     public List<ProductionOrderItems> getProductionOrderItems() { return this.productionOrderItems; }
 
     public void setProductionOrderItems(List<ProductionOrderItems> productionOrderItems) { this.productionOrderItems = productionOrderItems; }

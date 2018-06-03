@@ -20,6 +20,8 @@
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/production_order?useSSL=false"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.logging.file" value="output.log"/>
+            <property name="eclipselink.logging.level" value="FINE"/>
         </properties>
     </persistence-unit>
 </persistence>

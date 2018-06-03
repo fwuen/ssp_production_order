@@ -1,5 +1,6 @@
 package data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,6 +47,7 @@ public class ProductionOrder {
 
 
     @ManyToMany(mappedBy = "productionOrders", cascade = {CascadeType.MERGE})
+    @JsonIgnore
     public List<CustomerOrder> getCustomerOrders() {
         return customerOrders;
     }

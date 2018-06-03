@@ -1,2 +1,0 @@
-ResourceBundle labels = ResourceBundle.getBundle("internationalization.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
-labels.getString("error-NumberPositiv")

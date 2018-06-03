@@ -1,5 +1,7 @@
 package data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -61,6 +63,7 @@ public class ProductionOrderItems {
 
     @ManyToOne
     @JoinColumn(name = "p_id", referencedColumnName = "p_id", nullable = false)
+    @JsonIgnore
     public Product getProductByPId() {
         return productByPId;
     }
@@ -71,6 +74,7 @@ public class ProductionOrderItems {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "po_id", referencedColumnName = "po_id", nullable = false)
+    @JsonIgnore
     public ProductionOrder getProductionOrderByPoId() {
         return productionOrderByPoId;
     }

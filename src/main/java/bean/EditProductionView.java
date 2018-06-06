@@ -49,18 +49,18 @@ public class EditProductionView {
     ResourceBundle msgs = ResourceBundle.getBundle("internationalization.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     public void selectProduction() {
-        machine = selectedProduction.getMachineId();
-        product = selectedProduction.getProductByProductId();
-        tool = selectedProduction.getToolId();
-        productionOrder = selectedProduction.getProductionOrderByProductionOrderId();
-        date = new Date(selectedProduction.getPrTimestamp().getTime());
-
         FacesMessage msg;
         if (selectedProduction != null) {
+            machine = selectedProduction.getMachineId();
+            product = selectedProduction.getProductByProductId();
+            tool = selectedProduction.getToolId();
+            productionOrder = selectedProduction.getProductionOrderByProductionOrderId();
+            date = new Date(selectedProduction.getPrTimestamp().getTime());
             msg = new FacesMessage(msgs.getString("Selected"), selectedProduction.toString());
         } else {
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msgs.getString("InvalidProduction"), msgs.getString("NoProductionSelection"));
         }
+
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
@@ -68,34 +68,44 @@ public class EditProductionView {
         selectedProduction.setToolId(tool);
         selectedProduction.setMachineId(machine);
         selectedProduction.setPrTimestamp(new Timestamp(date.getTime()));
-        new DatabaseManager().updateProduction(selectedProduction);
+
+        FacesMessage msg;
+        try {
+            new DatabaseManager().updateProduction(selectedProduction);
+            msg = new FacesMessage(msgs.getString("Success"), msgs.getString("EditSuccess"));
+        } catch (Exception e) {
+            msg = new FacesMessage(msgs.getString("Error"), msgs.getString("EditError"));
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void deleteProduction() {
         DatabaseManager databaseManager = new DatabaseManager();
-        for (ProductionOrderItems  productionOrderItems : selectedProduction.getProductionOrderByProductionOrderId().getProductionOrderItems()) {
-            if (productionOrderItems.getProductByPId().getpId() == selectedProduction.getProductByProductId().getpId()) {
-                if (selectedProduction.getProductionOrderByProductionOrderId().getProductionOrderItems().size() == 1) {
-                    if (productionOrderItems.getCnt() == 1) {
-                        databaseManager.removeProduction(selectedProduction);
-                        databaseManager.removeProductionOrder(selectedProduction.getProductionOrderByProductionOrderId());
-                    } else {
-                        databaseManager.removeProduction(selectedProduction);
-                        productionOrderItems.setCnt(productionOrderItems.getCnt() - 1);
-                        databaseManager.updateProductionOrderItems(productionOrderItems);
-                    }
-                } else {
-                    if (productionOrderItems.getCnt() == 1) {
-                        databaseManager.removeProduction(selectedProduction);
-                        databaseManager.removeProductionOrderItems(productionOrderItems);
-                    } else {
-                        databaseManager.removeProduction(selectedProduction);
-                        productionOrderItems.setCnt(productionOrderItems.getCnt() - 1);
-                        databaseManager.updateProductionOrderItems(productionOrderItems);
+        FacesMessage msg;
+        if (selectedProduction != null) {
+            try {
+                for (ProductionOrderItems productionOrderItems : selectedProduction.getProductionOrderByProductionOrderId().getProductionOrderItems()) {
+                    if (productionOrderItems.getProductByPId().getpId() == selectedProduction.getProductByProductId().getpId()) {
+                        if (productionOrderItems.getCnt() == 1) {
+                            databaseManager.removeProduction(selectedProduction);
+                            databaseManager.removeProductionOrderItems(productionOrderItems);
+                        } else {
+                            databaseManager.removeProduction(selectedProduction);
+                            productionOrderItems.setCnt(productionOrderItems.getCnt() - 1);
+                            databaseManager.updateProductionOrderItems(productionOrderItems);
+                        }
                     }
                 }
+                msg = new FacesMessage(msgs.getString("Deleted"), msgs.getString("DeletedDetail"));
+            } catch (Exception e) {
+                msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msgs.getString("DeletionFailed"), msgs.getString("DeletionFailedDetail"));
             }
+        } else {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msgs.getString("InvalidProduction"), msgs.getString("NoProductionSelection"));
         }
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void setSelectedProductionId(int selectedProductionId) {

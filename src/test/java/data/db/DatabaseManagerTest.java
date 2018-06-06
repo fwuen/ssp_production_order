@@ -1,9 +1,6 @@
 package data.db;
 
-import data.model.Product;
-import data.model.ProductType;
-import data.model.Production;
-import data.model.ProductionOrder;
+import data.model.*;
 import data.xml.XmlImporter;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -76,6 +73,9 @@ public class DatabaseManagerTest {
         }
 
         for (ProductionOrder productionOrder : productionOrders) {
+            for (ProductionOrderItems productionOrderItems : productionOrder.getProductionOrderItems()) {
+                databaseManager.writeProductionOrderItems(productionOrderItems);
+            }
             databaseManager.writeProductionOrder(productionOrder);
         }
     }

@@ -19,6 +19,15 @@ public class CustomerOrderProvider {
         em.getTransaction().commit();
     }
 
+    public void removeCustomerOrder(CustomerOrder customerOrder) {
+        em.getTransaction().begin();
+        if (!em.contains(customerOrder)) {
+            customerOrder = em.merge(customerOrder);
+        }
+        em.remove(customerOrder);
+        em.getTransaction().commit();
+    }
+
     public CustomerOrder findCustomerOrderById(int id) {
         return em.find(CustomerOrder.class, id);
     }

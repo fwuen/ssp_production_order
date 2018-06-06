@@ -80,8 +80,6 @@ public class AddOrderView {
     }
 
     public void createProductionOrders() {
-        //ProductionOrderManager productionOrderManager = new ProductionOrderManager();
-        //productionOrderManager.createProductionOrdersFromCustomerOrders(orders);
         productionOrder.writeProductionOrders(orders);
         orders.clear();
 

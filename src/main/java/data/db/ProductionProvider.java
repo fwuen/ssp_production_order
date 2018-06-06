@@ -51,8 +51,6 @@ public class ProductionProvider {
 
     public List<Production> findProductionsByProductionDate() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        //Expression<Timestamp> ts = cb.currentTimestamp();
-        //ParameterExpression<Date> parameter = cb.parameter(java.util.Date.class);
 
         CriteriaQuery<Production> q = cb.createQuery(Production.class);
         Root<Production> from = q.from(Production.class);

@@ -84,6 +84,7 @@ public class DatabaseManager {
         if (!em.contains(productType)) {
             productType = em.merge(productType);
         }
+        em.remove(productType);
         em.getTransaction().commit();
     }
     
@@ -102,6 +103,7 @@ public class DatabaseManager {
         if (!em.contains(productionOrder)) {
             productionOrder = em.merge(productionOrder);
         }
+        em.remove(productionOrder);
         em.getTransaction().commit();
     }
 
@@ -142,15 +144,7 @@ public class DatabaseManager {
         if (!em.contains(productionOrderItems)) {
             productionOrderItems = em.merge(productionOrderItems);
         }
+        em.remove(productionOrderItems);
         em.getTransaction().commit();
-    }
-
-    public List<Production> findProductionsByProductionDate() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Production> q = cb.createQuery(Production.class);
-        Root<Production> from = q.from(Production.class);
-        q.select(from);
-        q.orderBy(cb.asc(from.get("prTimestamp")));
-        return em.createQuery(q).getResultList();
     }
 }

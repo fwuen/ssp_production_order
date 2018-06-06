@@ -15,8 +15,8 @@
         <ui:include src="shared/nav.xhtml" />
     </div>
     <h2>#{msg.EditOrder}</h2>
+    <p:growl id="msgs" showDetail="true" />
     <h:form>
-        <p:growl id="msgs" showDetail="true" />
         <p:panel header="#{msg.ChooseProduction}" style="margin-bottom:10px;">
             <h:panelGrid columns="2" cellpadding="5">
                 <p:outputLabel for="production" value="#{msg.Production}:" />
@@ -47,8 +47,8 @@
             <p:inputNumber id="productionOrder" value="#{editProductionView.productionOrder.poId}" disabled="true" decimalPlaces="0" />
         </p:panelGrid>
         <br></br>
-        <p:commandButton value="#{msg.EditProduction}" action="#{editProductionView.submitForm()}" />
-        <p:commandButton value="#{msg.DeleteProduction}" action="#{editProductionView.deleteProduction()}" />
+        <p:commandButton value="#{msg.EditProduction}" update="msgs" action="#{editProductionView.submitForm()}" />
+        <p:commandButton value="#{msg.DeleteProduction}" update="msgs" action="#{editProductionView.deleteProduction()}" />
     </h:form>
 </h:body>
 </f:view>

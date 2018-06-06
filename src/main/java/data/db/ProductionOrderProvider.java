@@ -31,6 +31,7 @@ public class ProductionOrderProvider {
         if (!em.contains(productionOrder)) {
             productionOrder = em.merge(productionOrder);
         }
+        em.remove(productionOrder);
         em.getTransaction().commit();
     }
 
@@ -56,6 +57,7 @@ public class ProductionOrderProvider {
         if (!em.contains(productionOrderItems)) {
             productionOrderItems = em.merge(productionOrderItems);
         }
+        em.remove(productionOrderItems);
         em.getTransaction().commit();
     }
 }

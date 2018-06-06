@@ -15,6 +15,7 @@ public class ProductionController {
     ProductionProvider productionProvider = new ProductionProvider();
     private ObjectMapper mapper = new ObjectMapper();
 
+    /*
     @GET
     public Response getProductions()
     {
@@ -31,8 +32,15 @@ public class ProductionController {
         {
             return Response.status(500).entity(ex).build();
         }
+    }*/
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Production> getProductions() {
+        return productionProvider.findAllProductions();
     }
 
+    /*
     @GET
     @Path("/{id}")
     public Response getProductionById(@PathParam("id") int id)
@@ -47,25 +55,50 @@ public class ProductionController {
         catch (JsonProcessingException ex) {
             return Response.status(500).entity(ex).build();
         }
+    }*/
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Production getProduction(@PathParam("id") String id) {
+        return productionProvider.findProductionById(Integer.parseInt(id));
     }
 
     @DELETE
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void deleteProduction(@PathParam("id") int id) {
-        productionProvider.removeProduction(productionProvider.findProductionById(id));
+    public Response deleteProduction(@PathParam("id") int id) {
+        Production production = productionProvider.findProductionById(id);
+        if (production == null) {
+            return Response.status(404).build();
+        }
+        try {
+            productionProvider.removeProduction(productionProvider.findProductionById(id));
+            return Response.status(200).build();
+        } catch (Exception ex) {
+            return Response.status(500).entity(ex).build();
+        }
     }
 
     @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    public Production updateProduction(Production production) {
-        productionProvider.updateProduction(production);
-        return production;
+    public Response updateProduction(Production production) {
+        try {
+            productionProvider.updateProduction(production);
+            return Response.status(200).entity(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(production)).build();
+        } catch (Exception ex) {
+            return Response.status(500).entity(ex).build();
+        }
     }
 
     @POST
-    public Production addProduction(Production production) {
-        productionProvider.writeProduction(production);
-        return production;
+    public Response addProduction(Production production) {
+        try {
+            if (production == null) {
+                return Response.status(400).build();
+            }
+            productionProvider.writeProduction(production);
+            return Response.status(200).entity(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(production)).build();
+        } catch (Exception ex) {
+            return Response.status(500).entity(ex).build();
+        }
     }
 }

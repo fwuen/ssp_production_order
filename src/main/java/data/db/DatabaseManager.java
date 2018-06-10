@@ -2,32 +2,25 @@ package data.db;
 
 import data.model.*;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Root;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.util.List;
-import java.util.Map;
 
+@Deprecated
 public class DatabaseManager {
     private EntityManager em;
     
-    public DatabaseManager() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProductionOrderPersistenceUnit");
-        this.em = emf.createEntityManager();
-    }
-    
     public void writeProduct(Product product) {
-        em.getTransaction().begin();
         em.persist(product);
-        em.getTransaction().commit();
+
     }
 
     public void updateProduct(Product product) {
         em.getTransaction().begin();
         em.merge(product);
-        em.getTransaction().commit();
+
     }
 
     public Product findProductById(int id) {

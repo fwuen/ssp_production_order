@@ -2,10 +2,10 @@ package data.db;
 
 import data.model.*;
 import data.xml.XmlImporter;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import javax.ejb.EJB;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
@@ -15,19 +15,27 @@ import java.util.List;
 
 public class DatabaseManagerTest {
 
+    ProductProvider productProvider = new ProductProvider();
+
+    ProductTypeProvider productTypeProvider = new ProductTypeProvider();
+
+    ProductionOrderProvider productionOrderProvider = new ProductionOrderProvider();
+
+    ProductionProvider productionProvider = new ProductionProvider();
+
+    XmlImporter xmlImporter = new XmlImporter();
+
     @Test
     public void testWriteProductType() {
-        DatabaseManager databaseManager = new DatabaseManager();
         ProductType productType = new ProductType();
         productType.setPtId(1);
         productType.setProductTypeByPtParentPtId(productType);
-        databaseManager.writeProductType(productType);
+        productTypeProvider.writeProductType(productType);
     }
 
     @Test
     public void writeProductTypeXmlData() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        XmlImporter xmlImporter = new XmlImporter(new File("src\\main\\resources\\xml\\prod_type.xml"));
+        xmlImporter.setFile(new File("src\\main\\resources\\xml\\prod_type.xml"));
         List<ProductType> productTypes = new ArrayList<>();
         try {
             productTypes = xmlImporter.readProductTypes();
@@ -36,14 +44,13 @@ public class DatabaseManagerTest {
         }
 
         for (ProductType productType:productTypes) {
-            databaseManager.writeProductType(productType);
+            productTypeProvider.writeProductType(productType);
         }
     }
 
     @Test
     public void writeProductXmlData() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        XmlImporter xmlImporter = new XmlImporter(new File("src\\main\\resources\\xml\\product.xml"));
+        xmlImporter.setFile(new File("src\\main\\resources\\xml\\product.xml"));
         List<Product> products = new ArrayList<>();
         try {
             products = xmlImporter.readProducts();
@@ -52,16 +59,15 @@ public class DatabaseManagerTest {
         }
 
         for (Product product:products) {
-            databaseManager.writeProduct(product);
+            productProvider.writeProduct(product);
         }
     }
 
     @Test
     public void writeProductionOrderData() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        XmlImporter xmlImporter = new XmlImporter(new File("src\\main\\resources\\xml\\production_order.xml"));
+        xmlImporter.setFile(new File("src\\main\\resources\\xml\\production_order.xml"));
         List<ProductionOrder> productionOrders = new ArrayList<>();
-        List<Product> allProducts = databaseManager.findAllProducts();
+        List<Product> allProducts = productProvider .findAllProducts();
         try {
             productionOrders = xmlImporter.readProductionOrders(allProducts);
         } catch (IOException e) {
@@ -74,16 +80,15 @@ public class DatabaseManagerTest {
 
         for (ProductionOrder productionOrder : productionOrders) {
             for (ProductionOrderItems productionOrderItems : productionOrder.getProductionOrderItems()) {
-                databaseManager.writeProductionOrderItems(productionOrderItems);
+                productionOrderProvider.writeProductionOrderItems(productionOrderItems);
             }
-            databaseManager.writeProductionOrder(productionOrder);
+            productionOrderProvider.writeProductionOrder(productionOrder);
         }
     }
 
     @Test
     public void writeProductionData() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        XmlImporter xmlImporter = new XmlImporter(new File("src\\main\\resources\\xml\\production.xml"));
+        xmlImporter.setFile(new File("src\\main\\resources\\xml\\production.xml"));
         List<Production> productions = new ArrayList<>();
         try {
             productions = xmlImporter.readProductions();
@@ -98,15 +103,14 @@ public class DatabaseManagerTest {
         }
 
         for (Production production : productions) {
-            databaseManager.writeProduction(production);
+            productionProvider.writeProduction(production);
         }
     }
 
     @Test
     public void testUpdateProduct() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        Product product = databaseManager.findProductById(1);
+        Product product = productProvider.findProductById(1);
         product.setpName("Product1");
-        databaseManager.updateProduct(product);
+        productProvider.updateProduct(product);
     }
 }

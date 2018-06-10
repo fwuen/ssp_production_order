@@ -2,23 +2,23 @@ package data.db;
 
 import data.model.ProductType;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.ejb.Stateless;
+import javax.persistence.*;
 import java.util.List;
 
+@Stateless
 public class ProductTypeProvider {
+    @PersistenceContext(unitName = "ProductionOrderPersistenceUnit")
     EntityManager em;
 
+    /*
     public ProductTypeProvider() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProductionOrderPersistenceUnit");
-        this.em = emf.createEntityManager();
-    }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProductionOrderPersistenceUnitManual");
+        em = emf.createEntityManager();
+    }*/
+
     public void writeProductType(ProductType productType) {
-        em.getTransaction().begin();
         em.persist(productType);
-        em.getTransaction().commit();
     }
 
     public ProductType findProductTypeById(int id) {
@@ -26,11 +26,10 @@ public class ProductTypeProvider {
     }
 
     public void removeProductType(ProductType productType) {
-        em.getTransaction().begin();
         if (!em.contains(productType)) {
             productType = em.merge(productType);
         }
-        em.getTransaction().commit();
+        em.remove(productType);
     }
 
     public List<ProductType> findAllProductTypes() {

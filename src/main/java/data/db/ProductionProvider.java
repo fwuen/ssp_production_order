@@ -2,33 +2,32 @@ package data.db;
 
 import data.model.Production;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.persistence.criteria.*;
+import javax.ejb.Stateless;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
+@Stateless
 public class ProductionProvider {
+    @PersistenceContext(unitName = "ProductionOrderPersistenceUnit")
     EntityManager em;
 
+    /*
     public ProductionProvider() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProductionOrderPersistenceUnit");
-        this.em = emf.createEntityManager();
-    }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProductionOrderPersistenceUnitManual");
+        em = emf.createEntityManager();
+    }*/
 
     public void writeProduction(Production production) {
-        em.getTransaction().begin();
         em.persist(production);
-        em.getTransaction().commit();
     }
 
     public void updateProduction(Production production) {
-        em.getTransaction().begin();
         em.merge(production);
-        em.getTransaction().commit();
     }
 
     public Production findProductionById(int id) {
@@ -36,12 +35,10 @@ public class ProductionProvider {
     }
 
     public void removeProduction(Production production) {
-        em.getTransaction().begin();
         if (!em.contains(production)) {
             production = em.merge(production);
         }
         em.remove(production);
-        em.getTransaction().commit();
     }
 
     public List<Production> findAllProductions() {
@@ -55,10 +52,12 @@ public class ProductionProvider {
         CriteriaQuery<Production> q = cb.createQuery(Production.class);
         Root<Production> from = q.from(Production.class);
 
-        Predicate startDatePredicate = cb.greaterThanOrEqualTo(from.<Date>get("prTimestamp"), new Timestamp(System.currentTimeMillis()));
+        Predicate startDatePredicate = cb.greaterThanOrEqualTo(from.get("prTimestamp"), new Timestamp(System.currentTimeMillis()));
 
         q.select(from).where(startDatePredicate);
         q.orderBy(cb.asc(from.get("prTimestamp")));
-        return em.createQuery(q).getResultList();
+        Query query = em.createQuery(q);
+        List<Production> productions = query.getResultList();
+        return productions;
     }
 }

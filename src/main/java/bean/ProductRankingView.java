@@ -1,6 +1,7 @@
 package bean;
 
-import data.db.DatabaseManager;
+import data.db.ProductProvider;
+import data.db.ProductionProvider;
 import data.model.Product;
 import data.model.Production;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -20,18 +22,26 @@ import java.util.ResourceBundle;
 @ManagedBean(name = "productRankingView")
 @ViewScoped
 public class ProductRankingView {
+    @EJB
+    ProductionProvider productionProvider;
+
+    @EJB
+    ProductProvider productProvider;
+
     @Getter
     @Setter
     private HorizontalBarChartModel horizontalBarChartModel;
 
-    private List<Product> products = allProducts();
+    private List<Product> products;
 
-    private List<Production> productions = allProductions();
+    private List<Production> productions;
 
     ResourceBundle msgs = ResourceBundle.getBundle("internationalization.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     @PostConstruct
     public void init() {
+        products = allProducts();
+        productions = allProductions();
         createBarModels();
     }
 
@@ -54,13 +64,11 @@ public class ProductRankingView {
     }
 
     private List<Product> allProducts() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        return databaseManager.findAllProducts();
+        return productProvider.findAllProducts();
     }
 
     private List<Production> allProductions() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        return databaseManager.findAllProductions();
+        return productionProvider.findAllProductions();
     }
 
     private int getNumberOfProductionsForProductById(int productId) {

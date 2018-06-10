@@ -1,6 +1,6 @@
 package bean;
 
-import data.db.DatabaseManager;
+import data.db.ProductionProvider;
 import data.model.Production;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,7 @@ import org.primefaces.model.timeline.TimelineEvent;
 import org.primefaces.model.timeline.TimelineModel;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -31,26 +32,23 @@ public class ProductionBean {
     private boolean axisOnTop;
     private boolean showCurrentTime = true;
     private boolean showNavigation = false;
+    @EJB ProductionProvider productionProvider;
 
     @Getter
     @Setter
-    private List<Production> productions = allProductions();
+    private List<Production> productions;
 
     ResourceBundle msgs = ResourceBundle.getBundle("internationalization.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     @PostConstruct
-    protected void initialize() {
+    protected void init() {
         model = new TimelineModel();
+        productions = productionProvider.findAllProductions();
         Calendar calendar = Calendar.getInstance();
         for (Production production : productions) {
             calendar.setTimeInMillis(production.getPrTimestamp().getTime());
             model.add(new TimelineEvent(production.getProductByProductId().getpName() + " | " + msgs.getString("ProdOrder") + " #" + production.getProductionOrderByProductionOrderId().getPoId(), calendar.getTime()));
         }
-    }
-
-    public List<Production> allProductions() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        return databaseManager.findAllProductions();
     }
 
     public void onSelect(TimelineSelectEvent e) {

@@ -1,12 +1,10 @@
 package bean;
 
-import data.db.DatabaseManager;
+import data.db.ProductionOrderProvider;
 import data.db.ProductionProvider;
 import data.model.Production;
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.event.ScheduleEntryMoveEvent;
-import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -14,7 +12,7 @@ import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -36,18 +34,20 @@ public class ProductionOverviewView {
 
     @Getter
     @Setter
-    private List<Production> productions = allProductions();
+    private List<Production> productions;
 
     @Getter
     @Setter
-    private List<Production> productionsOrderedByDate = allProductionsOrderedByDate();
+    private List<Production> productionsOrderedByDate;
 
-    private List<Production> allProductionsOrderedByDate() {
-        return new ProductionProvider().findProductionsByProductionDate();
-    }
+    @EJB
+    private ProductionProvider productionProvider;
 
     @PostConstruct
     public void init() {
+        productions = allProductions();
+        productionsOrderedByDate = allProductionsOrderedByDate();
+
         eventModel = new DefaultScheduleModel();
 
         for (Production production : productions) {
@@ -55,9 +55,12 @@ public class ProductionOverviewView {
         }
     }
 
+    private List<Production> allProductionsOrderedByDate() {
+        return productionProvider.findProductionsByProductionDate();
+    }
+
     public List<Production> allProductions() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        return databaseManager.findAllProductions();
+        return productionProvider.findAllProductions();
     }
 
     public void onEventSelect(SelectEvent selectEvent) {

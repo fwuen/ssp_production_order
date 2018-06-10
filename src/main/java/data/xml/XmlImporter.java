@@ -1,12 +1,19 @@
 package data.xml;
 
-import data.db.DatabaseManager;
+import data.db.ProductProvider;
+import data.db.ProductTypeProvider;
+import data.db.ProductionOrderProvider;
 import data.model.*;
 import org.jdom2.Element;
 import org.jdom2.input.DOMBuilder;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ejb.Stateless;
+import javax.enterprise.inject.spi.CDI;
+import javax.inject.Named;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,17 +23,21 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class XmlImporter {
     private File xmlFileToImport;
-    
-    public XmlImporter(File xmlFileToImport) {
+
+    ProductTypeProvider productTypeProvider = new ProductTypeProvider();
+
+    ProductProvider productProvider = new ProductProvider();
+
+    ProductionOrderProvider productionOrderProvider = new ProductionOrderProvider();
+
+    public void setFile(File xmlFileToImport) {
         this.xmlFileToImport = xmlFileToImport;
     }
-    
+
     private org.jdom2.Document getXmlDocument() throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -63,8 +74,7 @@ public class XmlImporter {
         Element root = getXmlDocument().getRootElement();
 
         root.getChildren("Product").forEach((product) -> {
-            DatabaseManager databaseManager = new DatabaseManager();
-            ProductType pt = databaseManager.findProductTypeById(Integer.parseInt(product.getChildText("ProductTypeID")));
+            ProductType pt = productTypeProvider.findProductTypeById(Integer.parseInt(product.getChildText("ProductTypeID")));
             Product productToAdd = new Product();
             productToAdd.setpId(Integer.parseInt(product.getChildText("ProductID")));
             productToAdd.setProductTypeByProductId(pt);
@@ -78,11 +88,9 @@ public class XmlImporter {
         return products;
     }
 
-    @Deprecated
     public List<ProductionOrder> readProductionOrders(List<Product> products) throws IOException, SAXException, ParserConfigurationException {
         List<ProductionOrder> productionOrders = new ArrayList<>();
 
-    
         Element root = getXmlDocument().getRootElement();
             
         root.getChildren("ProductionOrder").forEach((productionOrder) -> {
@@ -131,14 +139,12 @@ public class XmlImporter {
         Element root = getXmlDocument().getRootElement();
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-        DatabaseManager databaseManager = new DatabaseManager();
     
         for (Element production : root.getChildren("Production")) {
 
-            Product productToAdd = databaseManager.findProductById(Integer.parseInt(production.getChild("Product").getChildText("ProductID")));
+            Product productToAdd = productProvider.findProductById(Integer.parseInt(production.getChild("Product").getChildText("ProductID")));
 
-            ProductionOrder productionOrder = databaseManager.findProductionOrderById(Integer.parseInt(production.getChildText("ProductionOrderID")));
+            ProductionOrder productionOrder = productionOrderProvider.findProductionOrderById(Integer.parseInt(production.getChildText("ProductionOrderID")));
 
             Production productionToAdd = new Production();
             productionToAdd.setMachineId(Integer.parseInt(production.getChildText("MachineID")));

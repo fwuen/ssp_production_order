@@ -1,18 +1,17 @@
 package bean;
 
-import data.db.DatabaseManager;
+import data.db.ProductProvider;
 import data.model.*;
 import ejb.ProductionOrderLocal;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,11 +20,12 @@ import java.util.ResourceBundle;
 @ManagedBean(name = "addOrderViewBean")
 @SessionScoped
 public class AddOrderView {
-    DatabaseManager databaseManager = new DatabaseManager();
+    @EJB
+    ProductProvider productProvider;
 
     @Getter
     @Setter
-    List<Product> allProducts = allProducts();
+    List<Product> allProducts;
 
     @Getter
     @Setter
@@ -51,6 +51,11 @@ public class AddOrderView {
     ProductionOrderLocal productionOrder;
 
     ResourceBundle msgs = ResourceBundle.getBundle("internationalization.language", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+
+    @PostConstruct
+    public void init() {
+        allProducts = allProducts();
+    }
 
     public void submitForm() {
         Order newOrder = new Order();
@@ -123,7 +128,6 @@ public class AddOrderView {
     }
 
     public List<Product> allProducts() {
-        databaseManager = new DatabaseManager();
-        return databaseManager.findAllProducts();
+        return productProvider.findAllProducts();
     }
 }

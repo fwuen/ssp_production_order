@@ -3,7 +3,9 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
-    <persistence-unit name="ProductionOrderPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="ProductionOrderPersistenceUnit" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>jdbc/ProductionOrder</jta-data-source>
         <class>data.model.Product</class>
         <class>data.model.ProductType</class>
         <class>data.model.Production</class>
@@ -11,15 +13,9 @@
         <class>data.model.CustomerOrder</class>
         <class>data.model.ProductionOrderItems</class>
         <properties>
-            <property name="eclipselink.jdbc.bind-parameters" value="true"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="verysecure"/>
+            <!--
             <property name="eclipselink.hbm2ddl.auto" value="create" />
-            <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/production_order?useSSL=false"/>
-            <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
-            <property name="eclipselink.logging.file" value="output.log"/>
-            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.ddl-generation" value="create-tables"/>-->
         </properties>
     </persistence-unit>
 </persistence>

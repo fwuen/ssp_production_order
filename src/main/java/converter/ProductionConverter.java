@@ -1,17 +1,24 @@
 package converter;
 
-import data.db.DatabaseManager;
+import data.db.ProductionProvider;
 import data.model.Production;
 
+import javax.ejb.EJB;
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+@Named
 @FacesConverter(forClass = Production.class)
 public class ProductionConverter implements Converter {
+    ProductionProvider productionProvider = CDI.current().select(ProductionProvider.class).get();
+
     public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
         if (modelValue == null) {
             return "";
@@ -30,7 +37,7 @@ public class ProductionConverter implements Converter {
         }
 
         try {
-            return new DatabaseManager().findProductionById(Integer.valueOf(submittedValue));
+            return productionProvider.findProductionById(Integer.valueOf(submittedValue));
         } catch (NumberFormatException e) {
             throw new ConverterException(new FacesMessage(submittedValue + " is not a valid Production ID"), e);
         }

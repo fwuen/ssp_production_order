@@ -11,10 +11,12 @@ import java.util.List;
 
 public class XmlImporterTest {
     private String filePath = "C:\\workspace\\ssp_data\\";
+
+    XmlImporter xmlImporter = new XmlImporter();
     
     @Test
     public void testReadProducts() {
-        XmlImporter xmlImporter = new XmlImporter(new File(filePath + "product.xml"));
+        xmlImporter.setFile(new File(filePath + "product.xml"));
         List<Product> products = null;
         try {
             products = xmlImporter.readProducts();
@@ -30,7 +32,7 @@ public class XmlImporterTest {
 
     @Test
     public void testReadProductTypes() {
-        XmlImporter xmlImporter = new XmlImporter(new File(filePath + "prod_type.xml"));
+        xmlImporter.setFile(new File(filePath + "prod_type.xml"));
         List<ProductType> productTypes = null;
 
         try {
@@ -45,13 +47,16 @@ public class XmlImporterTest {
         );
     }
 
+    //TODO das hier muss funktionieren
     @Test
     public void testReadProductionOrders() {
-        XmlImporter xmlImporter = new XmlImporter(new File(filePath + "production_order.xml"));
         List<ProductionOrder> productionOrders = null;
 
         try {
-            productionOrders = xmlImporter.readProductionOrders(xmlImporter.readProducts());
+            xmlImporter.setFile(new File(filePath + "product.xml"));
+            List<Product> products = xmlImporter.readProducts();
+            xmlImporter.setFile(new File(filePath + "production_order.xml"));
+            productionOrders = xmlImporter.readProductionOrders(products);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +69,7 @@ public class XmlImporterTest {
 
     @Test
     public void readProductions() {
-        XmlImporter xmlImporter = new XmlImporter(new File(filePath + "production.xml"));
+        xmlImporter.setFile(new File(filePath + "production.xml"));
         List<Production> productions = null;
 
         try {

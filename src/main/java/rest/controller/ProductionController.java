@@ -1,18 +1,19 @@
 package rest.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import data.db.ProductionProvider;
 import data.model.Production;
 
+import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Path("production")
 public class ProductionController {
-    ProductionProvider productionProvider = new ProductionProvider();
+    @EJB
+    ProductionProvider productionProvider;
     private ObjectMapper mapper = new ObjectMapper();
 
     /*

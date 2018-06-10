@@ -22,7 +22,7 @@
                 <p:outputLabel for="production" value="#{msg.Production}:" />
                 <p:selectOneMenu id="production" value="#{editProductionView.selectedProduction}" style="width:150px">
                     <f:selectItem itemLabel="#{msg.ChooseProduction}" itemValue="" noSelectionOption="true" />
-                    <f:selectItems value="#{productionBean.allProductions()}" />
+                    <f:selectItems value="#{editProductionView.productions}" />
                 </p:selectOneMenu>
             </h:panelGrid>
 

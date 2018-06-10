@@ -1,8 +1,11 @@
 package ejb;
 
-import data.db.DatabaseManager;
+import data.db.CustomerOrderProvider;
+import data.db.ProductionOrderProvider;
+import data.db.ProductionProvider;
 import data.model.*;
 
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Singleton;
@@ -13,7 +16,14 @@ import java.util.*;
 @Local(ProductionOrderLocal.class)
 @Remote(ProductionOrder.class)
 public class ProductionOrderBean implements ProductionOrder, ProductionOrderLocal {
-    DatabaseManager databaseManager = new DatabaseManager();
+    @EJB
+    ProductionOrderProvider productionOrderProvider;
+
+    @EJB
+    CustomerOrderProvider customerOrderProvider;
+
+    @EJB
+    ProductionProvider productionProvider;
 
     @Override
     public void writeProductionOrders(List<Order> orders) {
@@ -73,7 +83,7 @@ public class ProductionOrderBean implements ProductionOrder, ProductionOrderLoca
                 }
 
                 productionOrder.setProductionOrderItems(productionOrderItemsList);
-                databaseManager.writeProductionOrder(productionOrder);
+                productionOrderProvider.writeProductionOrder(productionOrder);
 
                 productionOrders.add(productionOrder);
 
@@ -99,13 +109,13 @@ public class ProductionOrderBean implements ProductionOrder, ProductionOrderLoca
                         production.setToolId(new Random().nextInt(100) + 1);
                         production.setProductByProductId(productionOrderItems.getProductByPId());
 
-                        databaseManager.writeProduction(production);
+                        productionProvider.writeProduction(production);
                     }
                 }
             }
         }
         for (CustomerOrder customerOrder : customerOrders) {
-            databaseManager.writeCustomerOrder(customerOrder);
+            customerOrderProvider.writeCustomerOrder(customerOrder);
         }
     }
 

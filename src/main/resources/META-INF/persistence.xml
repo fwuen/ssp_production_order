@@ -15,7 +15,8 @@
         <properties>
             <!--
             <property name="eclipselink.hbm2ddl.auto" value="create" />
-            <property name="eclipselink.ddl-generation" value="create-tables"/>-->
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            -->
         </properties>
     </persistence-unit>
 </persistence>

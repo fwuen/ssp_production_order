@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "production_order", schema = "production_order")
 @EqualsAndHashCode
-@TableGenerator(name="table_generator", initialValue = 50, allocationSize = 1)
+@TableGenerator(name="table_generator", initialValue = 51, allocationSize = 1)
 public class ProductionOrder {
     private int poId;
     //private List<Product> productionOrderItems;

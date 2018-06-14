@@ -13,12 +13,6 @@ public class ProductionOrderProvider {
     @PersistenceContext(unitName = "ProductionOrderPersistenceUnit")
     EntityManager em;
 
-    /*
-    public ProductionOrderProvider() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProductionOrderPersistenceUnitManual");
-        em = emf.createEntityManager();
-    }*/
-
     public void writeProductionOrder(ProductionOrder productionOrder) {
         em.persist(productionOrder);
     }

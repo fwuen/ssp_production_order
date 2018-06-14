@@ -15,8 +15,8 @@
         <ui:include src="shared/nav.xhtml" />
     </div>
     <h2>#{msg.AddOrder}</h2>
+    <p:growl id="msgs" showDetail="true" />
     <h:form>
-        <p:growl id="msgs" showDetail="true" />
         <p:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
             <p:outputLabel for="customerId" value="#{msg.CustomerID}:" />
             <p:spinner id="customerId" value="#{addOrderViewBean.customerId}" min="1" max="100" required="true" />
@@ -32,9 +32,8 @@
         </p:panelGrid>
         <br></br>
         <p:commandButton update="msgs" value="#{msg.CreateOrder}" actionListener="#{addOrderViewBean.submitForm()}" ajax="false" />
-
-        <p:commandButton value="#{msg.CreateProductionOrders}" update="msgs" action="#{addOrderViewBean.createProductionOrders()}" />
     </h:form>
+    <p:commandButton value="#{msg.CreateProductionOrders}" update="msgs" action="#{addOrderViewBean.createProductionOrders()}" />
 </h:body>
 </f:view>
 </html>

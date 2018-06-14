@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "production", schema = "production_order")
-@TableGenerator(name="production_table_generator", initialValue = 377, allocationSize = 1)
+@TableGenerator(name="production_table_generator", initialValue = 438, allocationSize = 1)
 public class Production {
     private int prId;
     private int machineId;

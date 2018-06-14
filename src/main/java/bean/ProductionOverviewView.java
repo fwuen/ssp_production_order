@@ -73,12 +73,7 @@ public class ProductionOverviewView {
             } else {
                 break;
             }
-        }/*
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("edit_from_reference.xhtml?id=" + Integer.parseInt(numberAsString.toString()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        }
         redirectToEdit(Integer.parseInt(numberAsString.toString()));
 
     }

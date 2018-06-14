@@ -11,12 +11,6 @@ public class ProductTypeProvider {
     @PersistenceContext(unitName = "ProductionOrderPersistenceUnit")
     EntityManager em;
 
-    /*
-    public ProductTypeProvider() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProductionOrderPersistenceUnitManual");
-        em = emf.createEntityManager();
-    }*/
-
     public void writeProductType(ProductType productType) {
         em.persist(productType);
     }

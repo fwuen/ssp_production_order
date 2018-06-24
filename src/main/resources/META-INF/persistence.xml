@@ -12,11 +12,15 @@
         <class>data.model.ProductionOrder</class>
         <class>data.model.CustomerOrder</class>
         <class>data.model.ProductionOrderItems</class>
+        <class>data.model.Group</class>
+        <class>data.model.User</class>
         <properties>
             <!--
             <property name="eclipselink.hbm2ddl.auto" value="create" />
             <property name="eclipselink.ddl-generation" value="create-tables"/>
             -->
+            <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/production_order?useSSL=false"/>
+            <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
         </properties>
     </persistence-unit>
 </persistence>

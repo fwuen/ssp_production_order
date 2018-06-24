@@ -5,6 +5,7 @@ import lombok.Getter;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -32,6 +33,11 @@ public class UserSessionBean {
         {
             if (entry.getValue().toString().equals(newLocale))
                 FacesContext.getCurrentInstance().getViewRoot().setLocale(entry.getValue());
+        }
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getViewRoot().getViewId().substring(1));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

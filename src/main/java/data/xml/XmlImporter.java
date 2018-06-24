@@ -9,11 +9,6 @@ import org.jdom2.input.DOMBuilder;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.ejb.Stateless;
-import javax.enterprise.inject.spi.CDI;
-import javax.inject.Named;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;

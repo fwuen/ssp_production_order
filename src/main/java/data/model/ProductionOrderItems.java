@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "production_order_items", schema = "production_order", catalog = "")
+@Table(name = "production_order_items", schema = "production_order")
 @IdClass(ProductionOrderItemsPK.class)
 public class ProductionOrderItems {
     private int cnt;

@@ -924,264 +924,408 @@
     <table id="233" parent="6" name="customer_order">
       <Engine>InnoDB</Engine>
     </table>
-    <table id="234" parent="6" name="product">
+    <table id="234" parent="6" name="group">
       <Engine>InnoDB</Engine>
     </table>
-    <table id="235" parent="6" name="product_type">
+    <table id="235" parent="6" name="product">
       <Engine>InnoDB</Engine>
     </table>
-    <table id="236" parent="6" name="production">
+    <table id="236" parent="6" name="product_type">
       <Engine>InnoDB</Engine>
     </table>
-    <table id="237" parent="6" name="production_customer_order">
+    <table id="237" parent="6" name="production">
       <Engine>InnoDB</Engine>
     </table>
-    <table id="238" parent="6" name="production_order">
+    <table id="238" parent="6" name="production_customer_order">
       <Engine>InnoDB</Engine>
     </table>
-    <table id="239" parent="6" name="production_order_items">
+    <table id="239" parent="6" name="production_order">
       <Engine>InnoDB</Engine>
     </table>
-    <table id="240" parent="6" name="sequence">
+    <table id="240" parent="6" name="production_order_items">
       <Engine>InnoDB</Engine>
     </table>
-    <column id="241" parent="233" name="co_id">
+    <table id="241" parent="6" name="sequence">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="242" parent="6" name="user">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="243" parent="6" name="user_group">
+      <Engine>InnoDB</Engine>
+    </table>
+    <view id="244" parent="6" name="view_user_group">
+      <Comment>VIEW</Comment>
+    </view>
+    <column id="245" parent="233" name="co_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="242" parent="233" name="customer_id">
+    <column id="246" parent="233" name="customer_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="243" parent="233" name="target_date">
+    <column id="247" parent="233" name="target_date">
       <Position>3</Position>
       <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="244" parent="233" name="PRIMARY">
+    <key id="248" parent="233" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>co_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="245" parent="234" name="p_id">
+    <column id="249" parent="234" name="group_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="246" parent="234" name="p_name">
+    <column id="250" parent="234" name="group_name">
+      <Position>2</Position>
+      <DataType>varchar(45)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="251" parent="234" name="group_description">
+      <Position>3</Position>
+      <DataType>varchar(45)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="252" parent="234" name="idx_group_group_id">
+      <ColNames>group_id</ColNames>
+    </index>
+    <index id="253" parent="234" name="idx_group_group_name">
+      <ColNames>group_name</ColNames>
+    </index>
+    <index id="254" parent="234" name="idx_group_group_description">
+      <ColNames>group_description</ColNames>
+    </index>
+    <key id="255" parent="234" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>group_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="256" parent="235" name="p_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="257" parent="235" name="p_name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="247" parent="234" name="p_price">
+    <column id="258" parent="235" name="p_price">
       <Position>3</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="248" parent="234" name="p_type_id">
+    <column id="259" parent="235" name="p_type_id">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="249" parent="234" name="FK_product_p_type_id">
+    <index id="260" parent="235" name="FK_product_p_type_id">
       <ColNames>p_type_id</ColNames>
     </index>
-    <key id="250" parent="234" name="PRIMARY">
+    <key id="261" parent="235" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>p_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="251" parent="234" name="FK_product_p_type_id">
+    <foreign-key id="262" parent="235" name="FK_product_p_type_id">
       <ColNames>p_type_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>product_type</RefTableName>
       <RefColNames>pt_id</RefColNames>
     </foreign-key>
-    <column id="252" parent="235" name="pt_id">
+    <column id="263" parent="236" name="pt_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="253" parent="235" name="pt_parent_pt_id">
+    <column id="264" parent="236" name="pt_parent_pt_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="254" parent="235" name="FK_product_type_pt_parent_pt_id">
+    <index id="265" parent="236" name="FK_product_type_pt_parent_pt_id">
       <ColNames>pt_parent_pt_id</ColNames>
     </index>
-    <key id="255" parent="235" name="PRIMARY">
+    <key id="266" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>pt_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="256" parent="235" name="FK_product_type_pt_parent_pt_id">
+    <foreign-key id="267" parent="236" name="FK_product_type_pt_parent_pt_id">
       <ColNames>pt_parent_pt_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>product_type</RefTableName>
       <RefColNames>pt_id</RefColNames>
     </foreign-key>
-    <column id="257" parent="236" name="pr_id">
+    <column id="268" parent="237" name="pr_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="258" parent="236" name="machine_id">
+    <column id="269" parent="237" name="machine_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="259" parent="236" name="pr_date">
+    <column id="270" parent="237" name="pr_date">
       <Position>3</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="260" parent="236" name="tool_id">
+    <column id="271" parent="237" name="tool_id">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="261" parent="236" name="product_id">
+    <column id="272" parent="237" name="product_id">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="262" parent="236" name="production_order_id">
+    <column id="273" parent="237" name="production_order_id">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="263" parent="236" name="FK_production_product_id">
+    <index id="274" parent="237" name="FK_production_product_id">
       <ColNames>product_id</ColNames>
     </index>
-    <index id="264" parent="236" name="FK_production_production_order_id">
+    <index id="275" parent="237" name="FK_production_production_order_id">
       <ColNames>production_order_id</ColNames>
     </index>
-    <key id="265" parent="236" name="PRIMARY">
+    <key id="276" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>pr_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="266" parent="236" name="FK_production_product_id">
+    <foreign-key id="277" parent="237" name="FK_production_product_id">
       <ColNames>product_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>product</RefTableName>
       <RefColNames>p_id</RefColNames>
     </foreign-key>
-    <foreign-key id="267" parent="236" name="FK_production_production_order_id">
+    <foreign-key id="278" parent="237" name="FK_production_production_order_id">
       <ColNames>production_order_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>production_order</RefTableName>
       <RefColNames>po_id</RefColNames>
     </foreign-key>
-    <column id="268" parent="237" name="po_id">
+    <column id="279" parent="238" name="po_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="269" parent="237" name="co_id">
+    <column id="280" parent="238" name="co_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="270" parent="237" name="FK_production_customer_order_co_id">
+    <index id="281" parent="238" name="FK_production_customer_order_co_id">
       <ColNames>co_id</ColNames>
     </index>
-    <key id="271" parent="237" name="PRIMARY">
+    <key id="282" parent="238" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>po_id
 co_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="272" parent="237" name="FK_production_customer_order_po_id">
+    <foreign-key id="283" parent="238" name="FK_production_customer_order_po_id">
       <ColNames>po_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>production_order</RefTableName>
       <RefColNames>po_id</RefColNames>
     </foreign-key>
-    <foreign-key id="273" parent="237" name="FK_production_customer_order_co_id">
+    <foreign-key id="284" parent="238" name="FK_production_customer_order_co_id">
       <ColNames>co_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>customer_order</RefTableName>
       <RefColNames>co_id</RefColNames>
     </foreign-key>
-    <column id="274" parent="238" name="po_id">
+    <column id="285" parent="239" name="po_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="275" parent="238" name="PRIMARY">
+    <key id="286" parent="239" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>po_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="276" parent="239" name="cnt">
+    <column id="287" parent="240" name="cnt">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="277" parent="239" name="p_id">
+    <column id="288" parent="240" name="p_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="278" parent="239" name="po_id">
+    <column id="289" parent="240" name="po_id">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="279" parent="239" name="FK_production_order_items_po_id">
+    <index id="290" parent="240" name="FK_production_order_items_po_id">
       <ColNames>po_id</ColNames>
     </index>
-    <key id="280" parent="239" name="PRIMARY">
+    <key id="291" parent="240" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>p_id
 po_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="281" parent="239" name="FK_production_order_items_p_id">
+    <foreign-key id="292" parent="240" name="FK_production_order_items_p_id">
       <ColNames>p_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>product</RefTableName>
       <RefColNames>p_id</RefColNames>
     </foreign-key>
-    <foreign-key id="282" parent="239" name="FK_production_order_items_po_id">
+    <foreign-key id="293" parent="240" name="FK_production_order_items_po_id">
       <ColNames>po_id</ColNames>
       <RefSchemaName>production_order</RefSchemaName>
       <RefTableName>production_order</RefTableName>
       <RefColNames>po_id</RefColNames>
     </foreign-key>
-    <column id="283" parent="240" name="SEQ_NAME">
+    <column id="294" parent="241" name="SEQ_NAME">
       <Position>1</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="240" name="SEQ_COUNT">
+    <column id="295" parent="241" name="SEQ_COUNT">
       <Position>2</Position>
       <DataType>decimal(38)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="285" parent="240" name="PRIMARY">
+    <key id="296" parent="241" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SEQ_NAME</ColNames>
       <Primary>1</Primary>
     </key>
+    <column id="297" parent="242" name="user_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="298" parent="242" name="username">
+      <Position>2</Position>
+      <DataType>varchar(45)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="299" parent="242" name="password">
+      <Position>3</Position>
+      <DataType>varchar(45)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="300" parent="242" name="idx_user_user_id">
+      <ColNames>user_id</ColNames>
+    </index>
+    <index id="301" parent="242" name="idx_user_username">
+      <ColNames>username</ColNames>
+    </index>
+    <index id="302" parent="242" name="idx_user_password">
+      <ColNames>password</ColNames>
+    </index>
+    <key id="303" parent="242" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="304" parent="243" name="user_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="305" parent="243" name="group_id">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="306" parent="243" name="idx_user_group_user_id">
+      <ColNames>user_id</ColNames>
+    </index>
+    <index id="307" parent="243" name="fk_group_idx">
+      <ColNames>group_id</ColNames>
+    </index>
+    <index id="308" parent="243" name="idx_user_group_group_id">
+      <ColNames>group_id</ColNames>
+    </index>
+    <key id="309" parent="243" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id
+group_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="310" parent="243" name="fk_user">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>production_order</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>user_id</RefColNames>
+    </foreign-key>
+    <foreign-key id="311" parent="243" name="fk_group">
+      <ColNames>group_id</ColNames>
+      <RefSchemaName>production_order</RefSchemaName>
+      <RefTableName>group</RefTableName>
+      <RefColNames>group_id</RefColNames>
+    </foreign-key>
+    <column id="312" parent="244" name="uid">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="313" parent="244" name="uname">
+      <Position>2</Position>
+      <DataType>varchar(45)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="314" parent="244" name="upassword">
+      <Position>3</Position>
+      <DataType>varchar(45)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="315" parent="244" name="gname">
+      <Position>4</Position>
+      <DataType>varchar(45)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="316" parent="244" name="gid">
+      <Position>5</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="317" parent="244" name="gdescription">
+      <Position>6</Position>
+      <DataType>varchar(45)|0s</DataType>
+    </column>
   </database-model>
 </dataSource>

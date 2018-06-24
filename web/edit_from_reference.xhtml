@@ -25,10 +25,10 @@
             <p:inputText id="product" value="#{editProductionView.product.pName}" disabled="true" />
 
             <p:outputLabel for="machine" value="#{msg.Machine}:" />
-            <p:inputNumber id="machine" value="#{editProductionView.machine}" decimalPlaces="0" />
+            <p:inputNumber id="machine" value="#{editProductionView.machine}" minValue="1" decimalPlaces="0" />
 
             <p:outputLabel for="tool" value="#{msg.Tool}:" />
-            <p:inputNumber id="tool" value="#{editProductionView.tool}" decimalPlaces="0" />
+            <p:inputNumber id="tool" value="#{editProductionView.tool}" minValue="1" decimalPlaces="0" />
 
             <p:outputLabel for="date" value="#{msg.ProductionDate}:" />
             <p:calendar id="date" value="#{editProductionView.date}" pattern="yyyy-MM-dd HH:mm:ss" />
@@ -37,8 +37,8 @@
             <p:inputNumber id="productionOrder" value="#{editProductionView.productionOrder.poId}" disabled="true" decimalPlaces="0" />
         </p:panelGrid>
         <br></br>
-        <p:commandButton value="#{msg.EditProduction}" update="msgs" action="#{editProductionView.submitForm()}" />
-        <p:commandButton value="#{msg.DeleteProduction}" update="msgs" action="#{editProductionView.deleteProduction()}" />
+        <p:commandButton value="#{msg.EditProduction}" update="msgs" action="#{editProductionView.submitForm()}" rendered="#{request.isUserInRole('admin')}" />
+        <p:commandButton value="#{msg.DeleteProduction}" update="msgs" action="#{editProductionView.deleteProduction()}" rendered="#{request.isUserInRole('admin')}" />
     </h:form>
 </h:body>
 </f:view>

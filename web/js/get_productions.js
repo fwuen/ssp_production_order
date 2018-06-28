@@ -1,6 +1,6 @@
 $(document).ready(function() {
    $.get("rest/production").done(function(data) {
-       $.each(data, function(key, value) {
+       $.each(JSON.parse(data), function(key, value) {
            tstamp = new Date(value.prTimestamp)
            var prTime = ('0' + tstamp.getDate()).slice(-2) + '.'
                + ('0' + (tstamp.getMonth() + 1)).slice(-2) + '.'

@@ -23,7 +23,7 @@
 
             <f:facet name="options">
                 <c:set var="isNoUser" value="#{!request.isUserInRole('admin') and !request.isUserInRole('user')}" scope="request" />
-                <h:button outcome="login.xhtml" value="Login" style="" rendered="#{isNoUser}" />
+                <p:button outcome="login.xhtml" value="Login" style="" rendered="#{isNoUser}" />
                 <h:selectOneMenu value="#{userSessionBean.currentLocale}" onchange="submit()">
                     <f:selectItems value="#{userSessionBean.availableLocales}" />
                 </h:selectOneMenu>

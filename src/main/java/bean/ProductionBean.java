@@ -18,7 +18,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
-//TODO Refactor
 @ManagedBean(name = "productionBean")
 @ViewScoped
 public class ProductionBean {
@@ -47,7 +46,7 @@ public class ProductionBean {
         Calendar calendar = Calendar.getInstance();
         for (Production production : productions) {
             calendar.setTimeInMillis(production.getPrTimestamp().getTime());
-            model.add(new TimelineEvent(production.getProductByProductId().getpName() + " | " + msgs.getString("ProdOrder") + " #" + production.getProductionOrderByProductionOrderId().getPoId(), calendar.getTime()));
+            model.add(new TimelineEvent(production.getProductByProductId().getpName() + " | " + msgs.getString("ProdOrder") + " #" + production.getProductionOrderByProductionOrderId().getPoId() + " | Prod #" + production.getPrId(), calendar.getTime()));
         }
     }
 

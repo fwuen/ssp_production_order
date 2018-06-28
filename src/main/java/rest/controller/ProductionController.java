@@ -1,5 +1,6 @@
 package rest.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import data.db.ProductionProvider;
 import data.model.Production;
@@ -16,7 +17,7 @@ public class ProductionController {
     ProductionProvider productionProvider;
     private ObjectMapper mapper = new ObjectMapper();
 
-    /*
+
     @GET
     public Response getProductions()
     {
@@ -33,15 +34,15 @@ public class ProductionController {
         {
             return Response.status(500).entity(ex).build();
         }
-    }*/
+    }
 
+    /*
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Production> getProductions() {
         return productionProvider.findAllProductions();
-    }
+    }*/
 
-    /*
     @GET
     @Path("/{id}")
     public Response getProductionById(@PathParam("id") int id)
@@ -56,14 +57,15 @@ public class ProductionController {
         catch (JsonProcessingException ex) {
             return Response.status(500).entity(ex).build();
         }
-    }*/
+    }
 
+    /*
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Production getProduction(@PathParam("id") String id) {
         return productionProvider.findProductionById(Integer.parseInt(id));
-    }
+    }*/
 
     @DELETE
     @Path("/{id}")

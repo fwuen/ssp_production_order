@@ -93,6 +93,6 @@ public class Production {
 
     @Override
     public String toString() {
-        return "Production " + this.getPrId();
+        return "Production " + this.getPrId() + " " + this.getProductByProductId().getpName();
     }
 }

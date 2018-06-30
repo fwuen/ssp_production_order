@@ -34,8 +34,11 @@
         <br></br>
         <p:commandButton update="msgs" value="#{msg.CreateOrder}" actionListener="#{addOrderViewBean.submitForm()}" ajax="false" rendered="#{isUser}" />
     </h:form>
-    <h:form>
-        <p:commandButton value="#{msg.CreateProductionOrders}" update="msgs" action="#{addOrderViewBean.createProductionOrders()}" ajax="false" rendered="#{isUser}" />
+    <p:separator></p:separator>
+    <h:form rendered="#{isUser}">
+        <h2>#{msg.CreateProductionOrdersFromCustomerOrders}</h2>
+        <p:commandButton value="#{msg.CreateProductionOrders}" update="msgs" action="#{addOrderViewBean.createProductionOrders()}" ajax="false" />
+        <p>#{msg.NoticeCreateProductionOrders}</p>
     </h:form>
 </h:body>
 </f:view>

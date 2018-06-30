@@ -81,16 +81,15 @@ public class EditProductionView {
     }
 
     public void submitForm() {
-        selectedProduction.setToolId(tool);
-        selectedProduction.setMachineId(machine);
-        selectedProduction.setPrTimestamp(new Timestamp(date.getTime()));
-
         FacesMessage msg;
         try {
+            selectedProduction.setToolId(tool);
+            selectedProduction.setMachineId(machine);
+            selectedProduction.setPrTimestamp(new Timestamp(date.getTime()));
             productionProvider.updateProduction(selectedProduction);
             msg = new FacesMessage(msgs.getString("Success"), msgs.getString("EditSuccess"));
         } catch (Exception e) {
-            msg = new FacesMessage(msgs.getString("Error"), msgs.getString("EditError"));
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msgs.getString("Error"), msgs.getString("EditError"));
         }
         productions = productionProvider.findAllProductions();
 

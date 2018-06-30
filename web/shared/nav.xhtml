@@ -4,12 +4,13 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:set var="isUser" value="#{request.isUserInRole('admin') or request.isUserInRole('user')}" scope="request" />
     <h:form>
         <p:growl id="messages"/>
 
         <p:menubar>
             <p:menuitem value="Home" icon="fa fa-home" url="index.xhtml" />
-            <p:menuitem value="#{msg.NewOrder}" icon="fa fa-plus" url="add.xhtml" />
+            <p:menuitem value="#{msg.NewOrder}" icon="fa fa-plus" url="add.xhtml" rendered="#{isUser}" />
             <p:menuitem value="#{msg.ProductionDetails}" icon="fa fa-edit" url="edit.xhtml" />
             <p:submenu label="#{msg.Overviews}" icon="fa fa-align-left">
                 <p:menuitem value="#{msg.ProductOverview}" url="product_overview.xhtml" />

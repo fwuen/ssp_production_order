@@ -37,8 +37,8 @@
             <p:inputNumber id="productionOrder" value="#{editProductionView.productionOrder.poId}" disabled="true" decimalPlaces="0" />
         </p:panelGrid>
         <br></br>
-        <p:commandButton value="#{msg.EditProduction}" update="msgs" action="#{editProductionView.submitForm()}" rendered="#{request.isUserInRole('admin')}" />
-        <p:commandButton value="#{msg.DeleteProduction}" update="msgs" action="#{editProductionView.deleteProduction()}" rendered="#{request.isUserInRole('admin')}" />
+        <p:commandButton icon="fa fa-edit" value="#{msg.EditProduction}" update="msgs" action="#{editProductionView.submitForm()}" rendered="#{request.isUserInRole('admin')}" />
+        <p:commandButton icon="fa fa-remove" value="#{msg.DeleteProduction}" update="msgs" action="#{editProductionView.deleteProduction()}" rendered="#{request.isUserInRole('admin')}" />
     </h:form>
 </h:body>
 </f:view>

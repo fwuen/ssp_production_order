@@ -42,7 +42,7 @@
                             <h:outputText value="Production order:" />
                             <h:outputText value="#{production.productionOrderByProductionOrderId.poId}" style="font-weight: bold"/>
 
-                            <p:commandButton value="#{msg.ProductionDetails}" action="#{productionOverviewView.redirectToEdit(production.prId)}" />
+                            <p:commandButton icon="fa fa-info" value="#{msg.ProductionDetails}" action="#{productionOverviewView.redirectToEdit(production.prId)}" />
                         </h:panelGrid>
                         <p:separator />
                     </p:outputPanel>

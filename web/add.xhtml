@@ -32,12 +32,12 @@
             <p:calendar id="targetDate" value="#{addOrderViewBean.targetDate}" showOn="button" mindate="#{addOrderViewBean.tomorrow}" />
         </p:panelGrid>
         <br></br>
-        <p:commandButton update="msgs" value="#{msg.CreateOrder}" actionListener="#{addOrderViewBean.submitForm()}" ajax="false" rendered="#{isUser}" />
+        <p:commandButton icon="fa fa-plus" update="msgs" value="#{msg.CreateOrder}" actionListener="#{addOrderViewBean.submitForm()}" ajax="false" rendered="#{isUser}" />
     </h:form>
     <p:separator></p:separator>
     <h:form rendered="#{isUser}">
         <h2>#{msg.CreateProductionOrdersFromCustomerOrders}</h2>
-        <p:commandButton value="#{msg.CreateProductionOrders}" update="msgs" action="#{addOrderViewBean.createProductionOrders()}" ajax="false" />
+        <p:commandButton icon="fa fa-save" value="#{msg.CreateProductionOrders}" update="msgs" action="#{addOrderViewBean.createProductionOrders()}" ajax="false" />
         <p>#{msg.NoticeCreateProductionOrders}</p>
     </h:form>
 </h:body>

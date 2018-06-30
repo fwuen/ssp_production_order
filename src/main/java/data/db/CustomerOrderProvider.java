@@ -1,10 +1,13 @@
 package data.db;
 
 import data.model.CustomerOrder;
+import data.model.ProductionOrder;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 @Stateless
 public class CustomerOrderProvider {
@@ -24,5 +27,10 @@ public class CustomerOrderProvider {
 
     public CustomerOrder findCustomerOrderById(int id) {
         return em.find(CustomerOrder.class, id);
+    }
+
+    public List<CustomerOrder> findAllCustomerOrders() {
+        Query query = em.createQuery("SELECT e FROM CustomerOrder e");
+        return (List<CustomerOrder>) query.getResultList();
     }
 }

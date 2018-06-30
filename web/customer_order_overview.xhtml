@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{userSessionBean.currentLocale}">
+    <h:head>
+        <title>#{msg.CustomerOrderOverview}</title>
+    </h:head>
+    <h:body>
+        <div id="navbar">
+            <ui:include src="shared/nav.xhtml" />
+        </div>
+        <h2>#{msg.CustomerOrderOverview}</h2>
+        <h:form>
+            <p:dataScroller value="#{customerOrderOverview.customerOrders}" var="co" chunkSize="10" style="width:50%">
+                <f:facet name="header">
+                    #{msg.CustomerOrders}
+                </f:facet>
+
+                <h:panelGrid columns="2" style="width:100%" columnClasses="detail">
+                    <p:outputPanel>
+                        <h:panelGrid columns="2" cellpadding="5" columnClasses="detail">
+                            <h:outputText value="#{msg.Id}:" style="font-weight: bold;" />
+                            <h:outputText value="#{co.coId}" style="font-weight: bold; margin-right: 100px;" />
+
+                            <h:outputText value="#{msg.Customer}:" style="font-weight: bold;" />
+                            <h:outputText value="#{co.customerId}" style="font-weight: bold; margin-right: 100px;" />
+
+                            <h:outputText value="#{msg.TargetDate}" style="font-weight: bold;"/>
+                            <h:outputText value="#{co.targetDate}" style="font-weight: bold;" />
+
+                            <p:dataTable value="#{co.productionOrders}" var="po" >
+                                <p:column headerText="#{msg.ProductName}">
+
+                                </p:column>
+                                <p:column headerText="#{msg.ProductPrice}">
+
+                                </p:column>
+                                <p:subTable value="#{po.productionOrderItems}" var="item" >
+                                    <p:column>
+                                        <h:outputText value="#{item.productByPId.pName}" />
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputText value="#{item.productByPId.pPrice}">
+                                            <f:convertNumber currencySymbol="€" type="currency" />
+                                        </h:outputText>
+                                    </p:column>
+                                </p:subTable>
+
+                            </p:dataTable>
+                        </h:panelGrid>
+                        <p:separator />
+                    </p:outputPanel>
+                </h:panelGrid>
+            </p:dataScroller>
+        </h:form>
+    </h:body>
+</f:view>
+</html>

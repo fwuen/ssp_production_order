@@ -16,7 +16,16 @@
         </div>
         <h2>#{msg.CustomerOrderOverview}</h2>
         <h:form>
-            <p:dataScroller value="#{customerOrderOverview.customerOrders}" var="co" chunkSize="10" style="width:50%">
+            <h:form>
+                <h3>#{msg.FilterCustomerOrders}</h3>
+                <h:outputText value="#{msg.Start}" style="margin: 5px"/>
+                <p:calendar value="#{customerOrderOverview.start}" style="margin: 5px" pattern="dd.MM.yyyy"/>
+                <h:outputText value="#{msg.End}" style="margin: 5px"/>
+                <p:calendar value="#{customerOrderOverview.end}" pattern="dd.MM.yyyy" style="margin: 5px"/>
+                <p:commandButton ajax="false" value="#{msg.Reload}" action="#{customerOrderOverview.updateOrders()}" style="margin: 5px"/>
+                <p:separator></p:separator>
+            </h:form>
+            <p:dataScroller value="#{customerOrderOverview.filteredOrders}" var="co" style="width:50%">
                 <f:facet name="header">
                     #{msg.CustomerOrders}
                 </f:facet>

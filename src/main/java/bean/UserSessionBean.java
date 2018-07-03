@@ -5,6 +5,7 @@ import lombok.Getter;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -26,12 +27,12 @@ public class UserSessionBean {
         availableLocales.put("Deutsch", Locale.GERMAN);
     }
 
-    public void setCurrentLocale(String newLocale)
+    public void setCurrentLocale()
     {
-        this.currentLocale = newLocale;
+        this.currentLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("newLocale");
         for (Map.Entry<String, Locale> entry : availableLocales.entrySet())
         {
-            if (entry.getValue().toString().equals(newLocale))
+            if (entry.getValue().toString().equals(currentLocale))
                 FacesContext.getCurrentInstance().getViewRoot().setLocale(entry.getValue());
         }
         try {
@@ -41,8 +42,21 @@ public class UserSessionBean {
         }
     }
 
+    public void logout() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        session.invalidate();
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        } catch (IOException ex) {
+        }
+    }
+
     public Map<String, Locale> getAvailableLocales()
     {
         return availableLocales;
+    }
+
+    public boolean isCurrentLocaleGerman() {
+        return currentLocale.equals("de");
     }
 }
